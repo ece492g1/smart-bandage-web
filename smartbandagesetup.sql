@@ -12,7 +12,8 @@ CREATE TABLE care_providers (
   last_name VARCHAR(30) NOT NULL,
   email VARCHAR(50) NOT NULL,
   password VARCHAR(30) NOT NULL,
-  user_type INT(1) NOT NULL,
+  user_type CHAR(1) NOT NULL,
+  CHECK (user_type in ('a', 'n')),
   PRIMARY KEY (provider_id)
 );
 
