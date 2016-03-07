@@ -37,6 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	mysqli_close($dbc); // close the connection
 }
-	include('loginpage.php');
+	include('include/loginpage.php');
 
 ?>
