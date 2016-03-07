@@ -2,33 +2,32 @@
 // This page processes the login form and redirects the user based on which role they have
 	require('include/login_functions.php');
 	session_start();
-		if ($_SESSION['role'] == 'a'){
+		if ($_SESSION['user_type'] == 'a'){
 			redirect_user('adminhome.php');
 		}
-		if ($_SESSION['role'] == 'n'){
+		if ($_SESSION['user_type'] == 'n'){
 			redirect_user('nursehome.php');
 		}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
 	require('../sql_connect.php');
 
 
-	list ($check, $data) = check_login($dbc, $_POST['user_name'],$_POST['password']);
+	list ($check, $data) = check_login($dbc, $_POST['email'],$_POST['password']);
 
 	// If the credentials are ok
 	if ($check) {
-		$_SESSION['user_name'] = $data['user_name'];
-		$_SESSION['role'] = $data['role'];
+		$_SESSION['email'] = $data['email'];
+		$_SESSION['user_type'] = $data['user_type'];
 
 		//redirect them to different pages depending on their roles
 
 
-		if ($_SESSION['role'] == 'a'){
+		if ($_SESSION['user_type'] == 'a'){
 			redirect_user('adminhome.php');
 		}
-		if ($_SESSION['role'] == 'n'){
+		if ($_SESSION['user_type'] == 'n'){
 			redirect_user('nursehome.php');
 		}
 

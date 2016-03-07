@@ -36,8 +36,8 @@ function check_login($dbc, $username='', $password='') {
     // If no errors occur, then check if the username and password match the one in the database
     if (empty($errors)){
 
-        $q = "SELECT user_name,role FROM users WHERE user_name='$u' AND password='$p'";
-        $r = @mysqli_query($dbc,$q);
+        $q = "SELECT email,user_type FROM users WHERE email='$u' AND password='$p'";
+        $r = mysqli_query($dbc,$q);
 
         // If a row in the database is found that matches the username and password,
         // then it was correct login information
@@ -46,7 +46,7 @@ function check_login($dbc, $username='', $password='') {
             return array(true,$row);
         }
         else {
-            $errors[] = 'The username/password combination you entered does not match.';
+            $errors[] = 'The email/password combination you entered does not match.';
         }
     } // end of empty errors if
 
@@ -55,7 +55,7 @@ function check_login($dbc, $username='', $password='') {
 } // end of check login function
 
 function logout () {
-    if (!isset($_SESSION['user_name'])){
+    if (!isset($_SESSION['email'])){
         $url = 'loginpage.php';
        ob_end_clean();
        header("Location: $url");
