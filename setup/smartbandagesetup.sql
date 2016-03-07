@@ -4,9 +4,9 @@ DROP TABLE IF EXISTS temp_record;
 DROP TABLE IF EXISTS moisture_record;
 DROP TABLE IF EXISTS subscriptions;
 DROP TABLE IF EXISTS patient;
-DROP TABLE IF EXISTS care_providers;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE care_providers (
+CREATE TABLE users (
   provider_id INT(5) UNSIGNED AUTO_INCREMENT,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE subscriptions (
   care_provider INT(5) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   PRIMARY KEY (care_provider,patient_id),
-  FOREIGN KEY (care_provider) REFERENCES care_providers(provider_id),
+  FOREIGN KEY (care_provider) REFERENCES users(provider_id),
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id)
 );
 
