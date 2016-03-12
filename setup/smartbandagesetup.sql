@@ -20,6 +20,12 @@ CREATE TABLE users (
   UNIQUE (email)
 );
 
+CREATE TABLE login_history (
+  provider_id INT(5) UNSIGNED NOT NULL,
+  login_date DATETIME,
+  FOREIGN KEY (provider_id) REFERENCES users(provider_id)
+);
+
 CREATE TABLE patient (
   patient_id INT(5) UNSIGNED AUTO_INCREMENT,
   first_name VARCHAR(30) NOT NULL,
