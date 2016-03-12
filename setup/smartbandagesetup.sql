@@ -16,7 +16,8 @@ CREATE TABLE users (
   password VARCHAR(30) NOT NULL,
   user_type CHAR(1) NOT NULL,
   CHECK (user_type in ('a', 'n')),
-  PRIMARY KEY (provider_id)
+  PRIMARY KEY (provider_id),
+  UNIQUE (email)
 );
 
 CREATE TABLE patient (
@@ -75,12 +76,13 @@ CREATE TABLE bandage_record (
 );
 
 CREATE TABLE new_alerts (
+  record_id INT(10) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   alert_type CHAR(1) NOT NULL,
   creation_time DATETIME,
   viewed boolean NOT NULL,
-  viewed_by_user INT(5),
+  viewed_by_user INT(5) UNSIGNED NOT NULL,
   CHECK (alert_type in ('h','t','m','r')),
   value FLOAT(8,4) NOT NULL,
   PRIMARY KEY (record_id),
@@ -89,12 +91,13 @@ CREATE TABLE new_alerts (
 );
 
 CREATE TABLE archived_alerts (
+  record_id INT(10) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   alert_type CHAR(1) NOT NULL,
   creation_time DATETIME,
   viewed boolean NOT NULL,
-  viewed_by_user INT(5),
+  viewed_by_user INT(5) UNSIGNED NOT NULL,
   CHECK (alert_type in ('h','t','m','r')),
   value FLOAT(8,4) NOT NULL,
   PRIMARY KEY (record_id),

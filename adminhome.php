@@ -23,8 +23,9 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="/dist/custom/css/signin.css" rel="stylesheet">
-
+    <!--<link href="/dist/custom/css/signin.css" rel="stylesheet">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,10 +33,24 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
+  <div class=container>
   <body>
+    <h1 class="text-center">Admin Console<small>@usersName</small></h1>
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#nurseConsole">Nurse Console</a></li>
+    </ul>
 
+    <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="myhome">
+      
+    </div>
+    <div role="tabpanel" class="tab-pane" id="patientConsole">PatientTab</div>
+    <div role="tabpanel" class="tab-pane" id="nurseConsole">NurseTab</div>
+  </div>
 
-
+  </div>
   </body>
 </html>
