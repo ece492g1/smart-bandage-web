@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS new_alerts;
+DROP TABLE IF EXISTS archived_alerts;
 DROP TABLE IF EXISTS bandage_record;
 DROP TABLE IF EXISTS humidity_record;
 DROP TABLE IF EXISTS temp_record;
@@ -72,7 +74,21 @@ CREATE TABLE bandage_record (
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id)
 );
 
-CREATE TABLE alerts (
+CREATE TABLE new_alerts (
+  patient_id INT(5) UNSIGNED NOT NULL,
+  bandage_id INT(5) UNSIGNED NOT NULL,
+  alert_type CHAR(1) NOT NULL,
+  creation_time DATETIME,
+  viewed boolean NOT NULL,
+  viewed_by_user INT(5),
+  CHECK (alert_type in ('h','t','m','r')),
+  value FLOAT(8,4) NOT NULL,
+  PRIMARY KEY (record_id),
+  FOREIGN KEY (patient_id) REFERENCES patient(patient_id),
+  FOREIGN KEY (viewed_by_user) REFERENCES users(provider_id)
+);
+
+CREATE TABLE archived_alerts (
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   alert_type CHAR(1) NOT NULL,
