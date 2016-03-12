@@ -33,33 +33,41 @@ CREATE TABLE subscriptions (
 );
 
 CREATE TABLE humidity_record (
+  record_id INT(10) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
+  PRIMARY KEY (record_id),
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id)
 );
 
 CREATE TABLE temp_record (
+  record_id INT(10) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
+  PRIMARY KEY (record_id),
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id)
 );
 
 CREATE TABLE moisture_record (
+  record_id INT(10) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
+  PRIMARY KEY (record_id),
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id)
 );
 
 CREATE TABLE bandage_record (
+  record_id INT(10) UNSIGNED NOT NULL,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
+  PRIMARY KEY (record_id),
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id)
 );
