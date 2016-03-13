@@ -1,5 +1,5 @@
 <?php
-  function getPersonId ($dbc,$email){
+  function getUserId ($dbc,$email){
     $q = "SELECT provider_id FROM users WHERE email = '$email'";
     $r = @mysqli_query($dbc,$q);
 
@@ -74,5 +74,29 @@
       $errors[] ="User could not be deactivated";
     }
   }
+
+  function changePassword($dbc, $email, $oldpass,$newpass){
+		$errors = array();
+
+		$q1 = "SELECT email, password FROM users WHERE email = '$email' AND password = '$oldpass'";
+		$r1 = @mysqli_query($dbc,$q1);
+		
+		if (mysqli_num_rows($r1) == 1 ){
+
+			$q2 = "UPDATE users SET password = '$newpass' WHERE email = '$email'";
+			$r2 = mysqli_query($dbc,$q2);
+
+			if($r2) {
+				$errors[] = 'Password updated successfully';
+				return array(true,$errors);
+			} else { //the password was not updated successfully
+				$errors[] = 'The password update failed';
+				return array(false,$errors);
+			}
+		} else { //The old password is incorrect
+			$errors[] = 'The old password is incorrect';
+			return array(false,$errors);
+		}
+	}
 
 ?>
