@@ -20,6 +20,18 @@ CREATE TABLE users (
   UNIQUE (email)
 );
 
+CREATE TABLE inactive_users (
+  provider_id INT(5) UNSIGNED,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  password VARCHAR(30) NOT NULL,
+  user_type CHAR(1) NOT NULL,
+  CHECK (user_type in ('a', 'n')),
+  PRIMARY KEY (provider_id),
+  UNIQUE (email)
+);
+
 CREATE TABLE login_history (
   provider_id INT(5) UNSIGNED NOT NULL,
   login_date DATETIME,
