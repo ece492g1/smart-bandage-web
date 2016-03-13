@@ -44,7 +44,7 @@
 		}
 		mysqli_autocommit($dbc,false);
 
-		$q2 = "INSERT INTO users (first_name,last_name,email, password, user_type,active_status) VALUES ('$first', '$last', '$email','$pass','$role',true)";
+		$q2 = "INSERT INTO users (first_name,last_name,email, password, user_type,active_status) VALUES ('$first', '$last', '$email','$pass','$role',1)";
 		$r2 = mysqli_query($dbc, $q2);
 
 		if ($r2){ // the insert was successful
@@ -65,7 +65,7 @@
   function deactivateUser($dbc,$pid) {
     $errors = array();
 
-    $q0 = "UPDATE users SET active_status = false WHERE provider_id = $pid";
+    $q0 = "UPDATE users SET active_status = 0 WHERE provider_id = $pid";
     $r0 = mysqli_query($dbc,$q0);
 
     if ($r0){
