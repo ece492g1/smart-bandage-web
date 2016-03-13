@@ -31,7 +31,8 @@ CREATE TABLE patient (
   patient_id INT(5) UNSIGNED AUTO_INCREMENT,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  PRIMARY KEY (patient_id)
+  PRIMARY KEY (patient_id),
+  CONSTRAINT pat UNIQUE(first_name,last_name)
 );
 
 CREATE TABLE subscriptions (
