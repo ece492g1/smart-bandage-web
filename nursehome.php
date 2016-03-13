@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin Console</title>
+    <title>Nurse Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
   </head>
   <div class=container>
   <body>
-    <h1 class="text-center">My Home Page<small>@usersName</small></h1>
+    <h1 class="text-center">@UserName</h1>
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
       <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>

@@ -35,7 +35,7 @@
   </head>
   <div class=container>
   <body>
-    <h1 class="text-center">Admin Console<small>@usersName</small></h1>
+    <h1 class="text-center">@UserName</h1>
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
       <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>
@@ -45,7 +45,7 @@
     <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="myhome">
-      
+
     </div>
     <div role="tabpanel" class="tab-pane" id="patientConsole">PatientTab</div>
     <div role="tabpanel" class="tab-pane" id="nurseConsole">NurseTab</div>
