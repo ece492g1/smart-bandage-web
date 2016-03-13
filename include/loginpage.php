@@ -42,13 +42,13 @@ if (isset($errors) && !empty($errors)){
   </head>
 
   <body>
-    
+
     <div class="container">
 
       <form class="form-signin" action="login.php" method="POST">
         <h2 class="form-signin-heading">Smart Bandage Login</h2>
         <label for="email" class="sr-only">Email address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <input id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
         <label for="password" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 

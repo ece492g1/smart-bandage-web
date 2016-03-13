@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	// If the credentials are ok
 	if ($check) {
+		record_login($dbc,$data['email']);
 		$_SESSION['email'] = $data['email'];
 		$_SESSION['user_type'] = $data['user_type'];
 

@@ -54,6 +54,35 @@ function check_login($dbc, $username='', $password='') {
 
 } // end of check login function
 
+function record_login($dbc,$email){
+  $errors = array();
+  if (empty($email)){
+      $errors[] = 'No email address was passed.';
+  }
+  else {
+      $e = mysqli_real_escape_string($dbc,trim($email));
+  }
+
+  if (empty($errors)){
+    $q = "SELECT provider_id FROM users where email = '$e'";
+    $r = mysqli_query($dbc,$q);
+
+    if (mysqli_num_rows($r) == 1) {
+        $row = mysqli_fetch_array($r,MYSQLI_ASSOC);
+        $id = $row['provider_id'];
+        $q2 = "INSERT INTO login_history (provider_id,login_date) VALUES ($id,NOW())";
+        $r2 = mysqli_query($dbc,$q2);
+        if ($r2){
+          $errors[] = "Successful Login";
+          return true;
+        }
+    }
+    else {
+      return false;
+    }
+  }
+}
+
 function logout () {
     if (!isset($_SESSION['email'])){
         $url = 'loginpage.php';
