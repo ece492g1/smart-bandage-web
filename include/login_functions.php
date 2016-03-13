@@ -6,7 +6,7 @@
 // This function will redirect the user to a different page
 // The default redirection is to the index page of the website
 // but it can be overwritten to redirect anywhere
-function redirect_user($page = 'loginpage.php') {
+function redirect_user($page = 'login.php') {
     $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
     $url = rtrim($url,'/\\');
 
@@ -94,6 +94,7 @@ function logout () {
         $_SESSION = array();
         session_destroy();
         setcookie(session_name(),'',time()-3600);
+        header('Location: login.php');
     }
 }
 ?>

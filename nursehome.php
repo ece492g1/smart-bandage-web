@@ -35,6 +35,9 @@
   </head>
   <div class=container>
   <body>
+    <?php
+		include('include/navbar.php');
+		?>
     <h1 class="text-center">@UserName</h1>
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
