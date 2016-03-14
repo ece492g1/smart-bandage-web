@@ -58,7 +58,9 @@
       </span>
     </div>
 			then there will be a table of subscriptions for each health provider</div>
-		<div role="tabpanel" class="tab-pane" id="settings">Edit my own information</div>
+		<div role="tabpanel" class="tab-pane" id="settings">
+			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
+		</div>
   </div>
 
   </div>
