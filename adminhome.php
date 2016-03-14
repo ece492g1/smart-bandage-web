@@ -56,7 +56,9 @@
     <div role="tabpanel" class="tab-pane bs-example" id="patientConsole">Search Bar to lookup patients
 		also a button to add another patient</div>
     <div role="tabpanel" class="tab-pane bs-example" id="nurseConsole">Search to lookup nurses</div>
-		<div role="tabpanel" class="tab-pane" id="settings">edit my own information</div>
+		<div role="tabpanel" class="tab-pane" id="settings">
+			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
+		</div>
   </div>
 
   </div>
