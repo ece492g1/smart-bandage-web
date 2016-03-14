@@ -20,6 +20,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/dist/custom/css/sb.css" rel="stylesheet">
 
 
     <!-- Custom styles for this template -->
@@ -33,25 +34,29 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <div class=container>
+
   <body>
+
 		<?php
 		include('include/navbar.php');
 		?>
     <h1 class="text-center">@UserName</h1>
+		<div class="container">
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
       <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>
       <li role="presentation"><a data-toggle="tab" href="#nurseConsole">Nurse Console</a></li>
+			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
     </ul>
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myhome">
-
-    </div>
-    <div role="tabpanel" class="tab-pane" id="patientConsole">PatientTab</div>
-    <div role="tabpanel" class="tab-pane" id="nurseConsole">NurseTab</div>
+    <div role="tabpanel" class="tab-pane active bs-example" id="myhome">My home will just show
+		basic information about current user data </div>
+    <div role="tabpanel" class="tab-pane bs-example" id="patientConsole">Search Bar to lookup patients
+		also a button to add another patient</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="nurseConsole">Search to lookup nurses</div>
+		<div role="tabpanel" class="tab-pane" id="settings">edit my own information</div>
   </div>
 
   </div>

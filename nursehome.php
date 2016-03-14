@@ -33,23 +33,32 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <div class=container>
+
   <body>
     <?php
 		include('include/navbar.php');
 		?>
     <h1 class="text-center">@UserName</h1>
+		<div class=container>
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Subscriptions</a></li>
+			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
+
     </ul>
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myhome">
+    <div role="tabpanel" class="tab-pane active" id="myhome"></div>
+    <div role="tabpanel" class="tab-pane" id="patientConsole">
+			<div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for Patient">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
     </div>
-    <div role="tabpanel" class="tab-pane" id="patientConsole">PatientTab
-    </div>
+			then there will be a table of subscriptions for each health provider</div>
+		<div role="tabpanel" class="tab-pane" id="settings">Edit my own information</div>
   </div>
 
   </div>
