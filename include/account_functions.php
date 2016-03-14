@@ -109,11 +109,11 @@
 
     if ($r0) {
       $errors[] = 'First name updated';
-      return(true,$errors);
+      return array(true,$errors);
     }
     else {
       $errors[] ="Unable to update first name";
-      return(false,$errors);
+      return array(false,$errors);
     }
   }
 
@@ -125,11 +125,11 @@
 
     if ($r0) {
       $errors[] = 'Last name updated';
-      return(true,$errors);
+      return array(true,$errors);
     }
     else {
       $errors[] ="Unable to update last name";
-      return(false,$errors);
+      return array(false,$errors);
     }
   }
 
@@ -141,11 +141,11 @@
 
     if ($r0) {
       $errors[] = 'Email updated';
-      return(true,$errors);
+      return array(true,$errors);
     }
     else {
       $errors[] ="Unable to update email";
-      return(false,$errors);
+      return array(false,$errors);
     }
   }
 
@@ -157,11 +157,11 @@
 
     if ($r0) {
       $errors[] = 'User type updated';
-      return(true,$errors);
+      return array(true,$errors);
     }
     else {
       $errors[] ="Unable to update user type";
-      return(false,$errors);
+      return array(false,$errors);
     }
   }
 
