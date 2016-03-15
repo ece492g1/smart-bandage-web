@@ -1,6 +1,7 @@
 <?php #login page
 // This page processes the login form and redirects the user based on which role they have
 	require('include/login_functions.php');
+	require('../sql_connect.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'n'){
 			redirect_user();
