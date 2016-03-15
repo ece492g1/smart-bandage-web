@@ -44,7 +44,7 @@ CREATE TABLE subscriptions (
 );
 
 CREATE TABLE humidity_record (
-  record_id INT(10) UNSIGNED NOT NULL,
+  record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
@@ -54,7 +54,7 @@ CREATE TABLE humidity_record (
 );
 
 CREATE TABLE temp_record (
-  record_id INT(10) UNSIGNED NOT NULL,
+  record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
@@ -64,7 +64,7 @@ CREATE TABLE temp_record (
 );
 
 CREATE TABLE moisture_record (
-  record_id INT(10) UNSIGNED NOT NULL,
+  record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
@@ -74,7 +74,7 @@ CREATE TABLE moisture_record (
 );
 
 CREATE TABLE bandage_record (
-  record_id INT(10) UNSIGNED NOT NULL,
+  record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
@@ -84,7 +84,7 @@ CREATE TABLE bandage_record (
 );
 
 CREATE TABLE new_alerts (
-  record_id INT(10) UNSIGNED NOT NULL,
+  record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   alert_type CHAR(1) NOT NULL,
