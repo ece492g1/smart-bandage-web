@@ -45,4 +45,19 @@
   }
   }
 
+  function data2Chart($labels,$data,$dataset_label){
+    $finalData = "{";
+    $finalData = $finalData . "labels: " . json_encode($labels) . ",";
+    $finalData = $finalData . 'datasets: [
+        {
+            label: "'.$dataset_label.'",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",'
+            .json_encode($data).'}]}';
+            return $finalData;
+  }
  ?>
