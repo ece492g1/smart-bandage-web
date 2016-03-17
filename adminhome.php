@@ -1,6 +1,7 @@
 <?php #login page
 // This page processes the login form and redirects the user based on which role they have
 	require('include/login_functions.php');
+	require('../sql_connect.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'a'){
 			redirect_user();
@@ -15,7 +16,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
+		<script src="Chart.js"></script>
     <title>Admin Console</title>
 
     <!-- Bootstrap core CSS -->
@@ -39,6 +40,7 @@
 
 		<?php
 		include('include/navbar.php');
+		include('include/data_dsp_functions.php');
 		?>
     <h1 class="text-center">@UserName</h1>
 		<div class="container">
@@ -53,8 +55,22 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active bs-example" id="myhome">My home will just show
 		basic information about current user data </div>
-    <div role="tabpanel" class="tab-pane bs-example" id="patientConsole">Search Bar to lookup patients
-		also a button to add another patient</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="patientConsole">
+			<?php
+				list($labels,$data) = getTempData($dbc,1,88,2016,March,15);
+				$chart_data =  data2Chart($labels,$data,Sample_Dataset);
+				?>
+				<div style="display:flex;justify-content:center;align-items:center;">
+  				<div><canvas id="myChart" width="800" height="600"></canvas></div>
+				</div>
+
+				<script>
+					var ctx = document.getElementById("myChart").getContext("2d");
+					var myNewChart = new Chart(ctx).Line(<?php echo $chart_data ?>);
+				</script>
+
+
+		</div>
     <div role="tabpanel" class="tab-pane bs-example" id="nurseConsole">Search to lookup nurses</div>
 		<div role="tabpanel" class="tab-pane" id="settings">
 			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
