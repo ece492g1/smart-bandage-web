@@ -45,17 +45,17 @@
     <h1 class="text-center">@UserName</h1>
 		<div class="container">
     <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#nurseConsole">Nurse Console</a></li>
+      <li role="presentation" class="active"><a data-toggle="tab" href="#myHome">My Home</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#patientManager">Patient Manager</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#nurseManager">Nurse Manager</a></li>
 			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
     </ul>
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active bs-example" id="myhome">My home will just show
+    <div role="tabpanel" class="tab-pane active bs-example" id="myHome">My home will just show
 		basic information about current user data </div>
-    <div role="tabpanel" class="tab-pane bs-example" id="patientConsole">
+    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">
 			<?php
 				list($labels,$data) = getTempData($dbc,1,88,2016,March,15);
 				$chart_data =  data2Chart($labels,$data,Sample_Dataset);
@@ -71,7 +71,7 @@
 
 
 		</div>
-    <div role="tabpanel" class="tab-pane bs-example" id="nurseConsole">Search to lookup nurses</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">Search to lookup nurses</div>
 		<div role="tabpanel" class="tab-pane" id="settings">
 			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
 		</div>

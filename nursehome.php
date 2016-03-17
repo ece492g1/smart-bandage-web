@@ -42,16 +42,16 @@
     <h1 class="text-center">@UserName</h1>
 		<div class=container>
     <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Subscriptions</a></li>
+      <li role="presentation" class="active"><a data-toggle="tab" href="#myHome">My Home</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#patientManager">Patient Subscriptions</a></li>
 			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
 
     </ul>
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myhome"></div>
-    <div role="tabpanel" class="tab-pane" id="patientConsole">
+    <div role="tabpanel" class="tab-pane active" id="myHome"></div>
+    <div role="tabpanel" class="tab-pane" id="patientManager">
 			<div class="input-group">
       <input type="text" class="form-control" placeholder="Search for Patient">
       <span class="input-group-btn">
