@@ -37,6 +37,7 @@
 
   <body>
     <?php
+		require('../sql_connect.php');
 		include('include/navbar.php');
 		?>
     <h1 class="text-center">@UserName</h1>
@@ -55,10 +56,17 @@
 			<div class="input-group">
       <input type="text" class="form-control" placeholder="Search for Patient">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
+        <button class="btn btn-default" type="button">Search</button>
       </span>
     </div>
-			then there will be a table of subscriptions for each health provider</div>
+		<?php
+			include('include/search_functions.php');
+			list($ok,$results) = getSubscriptions($dbc,$_SESSION['pid']);
+			if ($ok){
+				echo tabulateResultSet($results);
+			}
+		 ?>
+		</div>
 		<div role="tabpanel" class="tab-pane" id="settings">
 			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
 		</div>
