@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		record_login($dbc,$data['email']);
 		$_SESSION['email'] = $data['email'];
 		$_SESSION['user_type'] = $data['user_type'];
+		$_SESSION['pid'] = $data['provider_id'];
 
 		//redirect them to different pages depending on their roles
 
