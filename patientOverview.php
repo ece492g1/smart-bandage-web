@@ -23,7 +23,7 @@
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/dist/css/bootstrap-datepicker.css" rel="stylesheet">
 
-
+		<script src="Chart.js"></script>
     <!-- Custom styles for this template -->
     <!--<link href="/dist/custom/css/signin.css" rel="stylesheet">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -39,6 +39,7 @@
   <body>
     <?php
 		include('include/navbar.php');
+		include('include/data_dsp_functions.php');
 		?>
     <h1 class="text-center">@UserName</h1>
 		<div class=container>
@@ -77,13 +78,56 @@
 			</script>
 			<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-				echo $_POST['date'];
+				$date = $_POST['date'];
+				$date_stuff = explode("/",$date);
+				$month = $date_stuff[0];
+				$day = $date_stuff[1];
+				$year = $date_stuff[2];
 				echo "<script>document.getElementById('myHomeTab').className = '' </script>";
 				echo "<script>document.getElementById('patientMeasurementsTab').className = 'active' </script>";
 				echo "<script>document.getElementById('myHome').className = 'tab-pane' </script>";
 				echo "<script>document.getElementById('patientMeasurements').className = 'tab-pane active' </script>";
+				list($templabels,$tempdata) = getTempData($dbc,1,88,$year,$month,$day);
+				$temp_chart_data =  data2Chart($templabels,$tempdata,TempDataSet);
 
-			}?>
+				list($humiditylabels,$humiditydata) = getHumidityData($dbc,1,88,$year,$month,$day);
+				$humidity_chart_data =  data2Chart($humiditylabels,$humiditydata,HumidityDataset);
+
+				list($moisturelabels,$moisturedata) = getMoistureData($dbc,1,88,$year,$month,$day);
+				$moisture_chart_data =  data2Chart($moisturelabels,$moisturedata,MoistureDataset);
+			}
+			?>
+			<?php
+				if (count($tempdata) != 0){
+					echo "<h1 class='text-center'>Temp Readings for $date</h1>";
+					echo '<div style="display:flex;justify-content:center;align-items:center;">
+						<div><canvas id="tempChart" width="800" height="600"></canvas></div>
+					</div>';
+				}
+
+				if (count($humiditydata) != 0){
+					echo "<h1 class='text-center'>Humidity Readings for $date</h1>";
+					echo '<div style="display:flex;justify-content:center;align-items:center;">
+						<div><canvas id="humidityChart" width="800" height="600"></canvas></div>
+					</div>';
+				}
+				if (count($moisturedata) != 0){
+					echo "<h1 class='text-center'>Moisture Readings for $date</h1>";
+					echo '<div style="display:flex;justify-content:center;align-items:center;">
+						<div><canvas id="moistureChart" width="800" height="600"></canvas></div>
+						</div>';
+				}
+			?>
+			<script>
+				var ctx = document.getElementById("tempChart").getContext("2d");
+				var myNewChart = new Chart(ctx).Line(<?php echo $temp_chart_data ?>);
+
+				var ctx = document.getElementById("humidityChart").getContext("2d");
+				var myNewChart = new Chart(ctx).Line(<?php echo $humidity_chart_data ?>);
+
+				var ctx = document.getElementById("moistureChart").getContext("2d");
+				var myNewChart = new Chart(ctx).Line(<?php echo $moisture_chart_data ?>);
+			</script>
 		</div>
     <div role="tabpanel" class="tab-pane" id="visitHistory"></div>
 		<div role="tabpanel" class="tab-pane" id="settings"></div>
