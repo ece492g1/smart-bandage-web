@@ -40,6 +40,13 @@
     <?php
 		include('include/navbar.php');
 		include('include/data_dsp_functions.php');
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$date = $_POST['date'];
+			$date_stuff = explode("/",$date);
+			$month = $date_stuff[0];
+			$day = $date_stuff[1];
+			$year = $date_stuff[2];
+		}
 		?>
     <h1 class="text-center">@UserName</h1>
 		<div class=container>
@@ -61,7 +68,7 @@
 			  <div class="form-group">
 					<label for="date">Select Date:</label>
 					<div class="input-group date">
-						<input type="text" id="date" name="date" class="form-control" value="01-01-2016">
+						<input type="text" id="date" name="date" class="form-control" value=<?php 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {echo $month."-".$day."-".$year;} ?>>
 						<div class="input-group-addon">
 						<span class="glyphicon glyphicon-th"></span>
 						</div>
@@ -78,11 +85,6 @@
 			</script>
 			<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-				$date = $_POST['date'];
-				$date_stuff = explode("/",$date);
-				$month = $date_stuff[0];
-				$day = $date_stuff[1];
-				$year = $date_stuff[2];
 				echo "<script>document.getElementById('myHomeTab').className = '' </script>";
 				echo "<script>document.getElementById('patientMeasurementsTab').className = 'active' </script>";
 				echo "<script>document.getElementById('myHome').className = 'tab-pane' </script>";
