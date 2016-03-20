@@ -37,7 +37,6 @@
 
   <body>
     <?php
-		require('../sql_connect.php');
 		include('include/navbar.php');
 		?>
     <h1 class="text-center">@UserName</h1>
