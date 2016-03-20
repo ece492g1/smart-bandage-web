@@ -36,7 +36,7 @@ function check_login($dbc, $username='', $password='') {
     // If no errors occur, then check if the username and password match the one in the database
     if (empty($errors)){
 
-        $q = "SELECT email,user_type FROM users WHERE email='$u' AND password='$p'";
+        $q = "SELECT email,user_type,provider_id FROM users WHERE email='$u' AND password='$p'";
         $r = mysqli_query($dbc,$q);
 
         // If a row in the database is found that matches the username and password,
