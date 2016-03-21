@@ -6,7 +6,9 @@
 		if ($_SESSION['user_type'] != 'n'){
 			redirect_user();
 		}
-
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$patient_id = $_POST['patient_id'];
+		}
 ?>
 <html lang="en">
   <head>
@@ -40,8 +42,8 @@
     <?php
 		include('include/navbar.php');
 		include('include/data_dsp_functions.php');
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$date = $_POST['date'];
+		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+			$date = $_GET['date'];
 			$date_stuff = explode("/",$date);
 			$month = $date_stuff[0];
 			$day = $date_stuff[1];
@@ -63,39 +65,50 @@
     <div role="tabpanel" class="tab-pane active" id="myHome"></div>
     <div role="tabpanel" class="tab-pane" id="patientMeasurements">
 
-			<form role="form" action="patientOverview.php" method="POST">
-
+			<form role="form" action="patientOverview.php" method="GET">
+				<div class="row">
+					<div class="col-md-6">
 			  <div class="form-group">
 					<label for="date">Select Date:</label>
 					<div class="input-group date">
-						<input type="text" id="date" name="date" class="form-control" value=<?php 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {echo $month."-".$day."-".$year;} ?>>
+						<input type="text" id="date" name="date" class="form-control" value=<?php 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {echo $month."/".$day."/".$year;} ?>>
 						<div class="input-group-addon">
 						<span class="glyphicon glyphicon-th"></span>
 						</div>
 					</div>
 			  </div>
-
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="bId">Select Bandage:</label>
+					<select id="bId" class="form-control">
+					  <option>1</option>
+						<option>2</option>
+						<option>3</option>
+					</select>
+				</div>
+			</div>
+		</div>
 			  <button type="submit" class="btn btn-default">Go!</button>
 			</form>
-
 
 			<script>
 			$('.input-group.date').datepicker({
 			});
 			</script>
 			<?php
-			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 				echo "<script>document.getElementById('myHomeTab').className = '' </script>";
 				echo "<script>document.getElementById('patientMeasurementsTab').className = 'active' </script>";
 				echo "<script>document.getElementById('myHome').className = 'tab-pane' </script>";
 				echo "<script>document.getElementById('patientMeasurements').className = 'tab-pane active' </script>";
-				list($templabels,$tempdata) = getTempData($dbc,1,88,$year,$month,$day);
+				list($templabels,$tempdata) = getTempData($dbc,$patient_id,88,$year,$month,$day);
 				$temp_chart_data =  data2Chart($templabels,$tempdata,TempDataSet);
 
-				list($humiditylabels,$humiditydata) = getHumidityData($dbc,1,88,$year,$month,$day);
+				list($humiditylabels,$humiditydata) = getHumidityData($dbc,$patient_id,88,$year,$month,$day);
 				$humidity_chart_data =  data2Chart($humiditylabels,$humiditydata,HumidityDataset);
 
-				list($moisturelabels,$moisturedata) = getMoistureData($dbc,1,88,$year,$month,$day);
+				list($moisturelabels,$moisturedata) = getMoistureData($dbc,$patient_id,88,$year,$month,$day);
 				$moisture_chart_data =  data2Chart($moisturelabels,$moisturedata,MoistureDataset);
 			}
 			?>

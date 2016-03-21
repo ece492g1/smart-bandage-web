@@ -19,12 +19,14 @@ function tabulateResultSet($rs){
   foreach($info as $inforow){
     $table .= "<th>" . $inforow->name . "</th>";
   }
+  $table .="<th>View</th>";
   $table .= "</tr>";
   while ($row = mysqli_fetch_array($rs, MYSQLI_ASSOC)) {
     $table .= "<tr>";
     foreach ($row as $rowele){
       $table.= "<td>". $rowele . "</td>";
     }
+    $table.= "<td><form action='patientOverview.php' method='post'><input type='hidden' name='patient_id' id='patient_id' value=".$row['Patient ID']."><button type='submit' class='btn btn-primary'>Profile</button></form></td>";
     $table .= "</tr>";
   }
   $table .= "</table>";
@@ -33,7 +35,7 @@ function tabulateResultSet($rs){
 
 function getSubscriptions($dbc,$pid){
   $errors = array();
-      $q = "SELECT patient.last_name AS 'Last Name',patient.first_name AS 'First Name' FROM patient INNER JOIN subscriptions ON patient.patient_id = subscriptions.patient_id WHERE subscriptions.care_provider = $pid";
+      $q = "SELECT patient.last_name AS 'Last Name',patient.first_name AS 'First Name', patient.patient_id AS 'Patient ID' FROM patient INNER JOIN subscriptions ON patient.patient_id = subscriptions.patient_id WHERE subscriptions.care_provider = $pid";
       $r = @mysqli_query($dbc,$q);
 
   if (mysqli_num_rows($r) >= 1) {
