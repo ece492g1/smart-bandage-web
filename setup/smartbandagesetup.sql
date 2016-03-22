@@ -46,6 +46,7 @@ CREATE TABLE subscriptions (
 CREATE TABLE humidity_record (
   record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   bandage_id INT(5) UNSIGNED NOT NULL,
+  sensor_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
   PRIMARY KEY (record_id)
@@ -54,6 +55,7 @@ CREATE TABLE humidity_record (
 CREATE TABLE temp_record (
   record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   bandage_id INT(5) UNSIGNED NOT NULL,
+  sensor_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
   PRIMARY KEY (record_id)
@@ -62,6 +64,7 @@ CREATE TABLE temp_record (
 CREATE TABLE moisture_record (
   record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   bandage_id INT(5) UNSIGNED NOT NULL,
+  sensor_id INT(5) UNSIGNED NOT NULL,
   creation_time DATETIME,
   value FLOAT(8,4) NOT NULL,
   PRIMARY KEY (record_id)
