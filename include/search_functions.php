@@ -46,4 +46,8 @@ function getSubscriptions($dbc,$pid){
     return array(false, $errors);
       }
   }
+
+  function getDisabledDates($patient_id){
+
+  }
  ?>
