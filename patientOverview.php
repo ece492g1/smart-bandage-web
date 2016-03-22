@@ -48,6 +48,7 @@
 			$month = $date_stuff[0];
 			$day = $date_stuff[1];
 			$year = $date_stuff[2];
+			$patient_id = $_GET['patient_id'];
 		}
 		?>
     <h1 class="text-center">@UserName</h1>
@@ -89,9 +90,9 @@
 				</div>
 			</div>
 		</div>
+				<input type="hidden" id='patient_id' name="patient_id" class="form-control" value=<?php echo "'$patient_id'"; ?>>
 			  <button type="submit" class="btn btn-default">Go!</button>
 			</form>
-
 			<script>
 			$('.input-group.date').datepicker({
 			});
