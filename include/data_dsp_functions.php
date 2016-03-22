@@ -1,7 +1,7 @@
 <?php
   function getTempData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT creation_time, value FROM temp_record WHERE patient_id = $patientId AND bandage_id = $bandageId AND YEAR(creation_time) ='$year' AND MONTH(creation_time) = '$month' AND DAYOFMONTH(creation_time) = '$day' ORDER BY creation_time";
+    $q0 = "SELECT temp_record.creation_time, temp_record.value FROM temp_record INNER JOIN bandage_record ON temp_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patient_id AND temp_record.bandage_id = $bandageId AND YEAR(temp_record.creation_time) ='$year' AND MONTH(temp_record.creation_time) = '$month' AND DAYOFMONTH(temp_record.creation_time) = '$day' ORDER BY temp_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -17,7 +17,7 @@
 
   function getHumidityData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT creation_time, value FROM humidity_record WHERE patient_id = $patientId AND bandage_id = $bandageId AND YEAR(creation_time) ='$year' AND MONTH(creation_time) = '$month' AND DAYOFMONTH(creation_time) = '$day' ORDER BY creation_time";
+    $q0 = "SELECT creation_time, value FROM humidity_record INNER JOIN bandage_record ON humidity_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patient_id AND humidity_record.bandage_id = $bandageId AND YEAR(humidity_record.creation_time) ='$year' AND MONTH(humidity_record.creation_time) = '$month' AND DAYOFMONTH(humidity_record.creation_time) = '$day' ORDER BY humidity_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -32,7 +32,7 @@
 
   function getMoistureData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT creation_time, value FROM moisture_record WHERE patient_id = $patientId AND bandage_id = $bandageId AND YEAR(creation_time) ='$year' AND MONTH(creation_time) = '$month' AND DAYOFMONTH(creation_time) = '$day' ORDER BY creation_time";
+    $q0 = "SELECT creation_time, value FROM moisture_record WHERE bandage_id = $bandageId AND YEAR(creation_time) ='$year' AND MONTH(creation_time) = '$month' AND DAYOFMONTH(creation_time) = '$day' ORDER BY creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
