@@ -2,12 +2,21 @@
 // This page processes the login form and redirects the user based on which role they have
 	require('include/login_functions.php');
 	require('../sql_connect.php');
+	include('include/data_dsp_functions.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'n'){
 			redirect_user();
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$patient_id = $_POST['patient_id'];
+			list($tempmonthlabels,$tempmonthdata) = getNowMonthTemp($dbc,$patient_id,88);
+			$temp_month_data =  data2Chart($tempmonthlabels,$tempmonthdata,MonthTempDataSet);
+
+			list($humiditymonthlabels,$humiditymonthdata) = getNowMonthHumidity($dbc,$patient_id,88);
+			$humidity_month_data =  data2Chart($humiditymonthlabels,$humiditymonthdata,MonthHumidityDataSet);
+
+			list($moisturemonthlabels,$moisturemonthdata) = getNowMonthMoisture($dbc,$patient_id,88);
+			$moisture_month_data =  data2Chart($moisturemonthlabels,$moisturemonthdata,MonthMoistureDataSet);
 		}
 ?>
 <html lang="en">
@@ -41,7 +50,7 @@
   <body>
     <?php
 		include('include/navbar.php');
-		include('include/data_dsp_functions.php');
+
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$date = $_GET['date'];
 			$date_stuff = explode("/",$date);
@@ -83,7 +92,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="bId">Select Bandage:</label>
-					<select id="bId" class="form-control">
+					<select name="bId" id="bId" class="form-control">
 					  <?php echo getBandages($dbc,$patient_id); ?>
 					</select>
 				</div>
@@ -105,49 +114,84 @@
 				echo "<script>document.getElementById('patientMeasurementsTab').className = 'active' </script>";
 				echo "<script>document.getElementById('myHome').className = 'tab-pane' </script>";
 				echo "<script>document.getElementById('patientMeasurements').className = 'tab-pane active' </script>";
-				list($templabels,$tempdata) = getTempData($dbc,$patient_id,88,$year,$month,$day);
-				echo $templabels;
 
+				list($templabels,$tempdata) = getTempData($dbc,$patient_id,$bandage_id,$year,$month,$day);
 				$temp_chart_data =  data2Chart($templabels,$tempdata,TempDataSet);
 
-				list($humiditylabels,$humiditydata) = getHumidityData($dbc,$patient_id,88,$year,$month,$day);
+				list($humiditylabels,$humiditydata) = getHumidityData($dbc,$patient_id,$bandage_id,$year,$month,$day);
 				$humidity_chart_data =  data2Chart($humiditylabels,$humiditydata,HumidityDataset);
 
-				list($moisturelabels,$moisturedata) = getMoistureData($dbc,$patient_id,88,$year,$month,$day);
+				list($moisturelabels,$moisturedata) = getMoistureData($dbc,$patient_id,$bandage_id,$year,$month,$day);
 				$moisture_chart_data =  data2Chart($moisturelabels,$moisturedata,MoistureDataset);
 			}
 			?>
 			<?php
+				if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+					if (count($tempmonthdata) != 0){
+						echo "<h1 class='text-center'>Temp Readings for Current Month</h1>";
+						echo '<div style="display:flex;justify-content:center;align-items:center;">
+							<div><canvas id="monthTempChart" width="800" height="600"></canvas></div>
+						</div>';
+						echo "<script>
+										var ctx = document.getElementById('monthTempChart').getContext('2d');
+										var myNewChart = new Chart(ctx).Line($temp_month_data);
+									</script>";
+					}
+
+					if (count($humiditymonthdata) != 0){
+						echo "<h1 class='text-center'>Humidity Readings for Current Month</h1>";
+						echo '<div style="display:flex;justify-content:center;align-items:center;">
+							<div><canvas id="monthHumidityChart" width="800" height="600"></canvas></div>
+						</div>';
+						echo "<script>
+										var ctx = document.getElementById('monthHumidityChart').getContext('2d');
+										var myNewChart = new Chart(ctx).Line($humidity_month_data);
+									</script>";
+					}
+
+					if (count($moisturemonthdata) != 0){
+						echo "<h1 class='text-center'>Moisture Readings for Current Month</h1>";
+						echo '<div style="display:flex;justify-content:center;align-items:center;">
+							<div><canvas id="monthMoistureChart" width="800" height="600"></canvas></div>
+						</div>';
+						echo "<script>
+										var ctx = document.getElementById('monthMoistureChart').getContext('2d');
+										var myNewChart = new Chart(ctx).Line($moisture_month_data);
+									</script>";
+					}
+				}
 				if (count($tempdata) != 0){
-					echo "<h1 class='text-center'>Temp Readings for $date</h1>";
+					echo "<h1 class='text-center'>Bandage $bandage_id, Temp Readings for $date</h1>";
 					echo '<div style="display:flex;justify-content:center;align-items:center;">
 						<div><canvas id="tempChart" width="800" height="600"></canvas></div>
 					</div>';
+					echo "<script>
+									var ctx = document.getElementById('tempChart').getContext('2d');
+									var myNewChart = new Chart(ctx).Line($temp_chart_data);
+								</script>";
 				}
 
 				if (count($humiditydata) != 0){
-					echo "<h1 class='text-center'>Humidity Readings for $date</h1>";
+					echo "<h1 class='text-center'>Bandage $bandage_id, Humidity Readings for $date</h1>";
 					echo '<div style="display:flex;justify-content:center;align-items:center;">
 						<div><canvas id="humidityChart" width="800" height="600"></canvas></div>
 					</div>';
+					echo "<script>
+									var ctx = document.getElementById('humidityChart').getContext('2d');
+									var myNewChart = new Chart(ctx).Line($humidity_chart_data);
+								</script>";
 				}
 				if (count($moisturedata) != 0){
-					echo "<h1 class='text-center'>Moisture Readings for $date</h1>";
+					echo "<h1 class='text-center'>Bandage $bandage_id, Moisture Readings for $date</h1>";
 					echo '<div style="display:flex;justify-content:center;align-items:center;">
 						<div><canvas id="moistureChart" width="800" height="600"></canvas></div>
 						</div>';
+					echo "<script>
+									var ctx = document.getElementById('moistureChart').getContext('2d');
+									var myNewChart = new Chart(ctx).Line($moisture_chart_data);
+								</script>";
 				}
 			?>
-			<script>
-				var ctx = document.getElementById("tempChart").getContext("2d");
-				var myNewChart = new Chart(ctx).Line(<?php echo $temp_chart_data ?>);
-
-				var ctx = document.getElementById("humidityChart").getContext("2d");
-				var myNewChart = new Chart(ctx).Line(<?php echo $humidity_chart_data ?>);
-
-				var ctx = document.getElementById("moistureChart").getContext("2d");
-				var myNewChart = new Chart(ctx).Line(<?php echo $moisture_chart_data ?>);
-			</script>
 		</div>
     <div role="tabpanel" class="tab-pane" id="visitHistory"></div>
 		<div role="tabpanel" class="tab-pane" id="settings"></div>

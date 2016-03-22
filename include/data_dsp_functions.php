@@ -17,7 +17,7 @@
 
   function getHumidityData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT creation_time, value FROM humidity_record INNER JOIN bandage_record ON humidity_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND humidity_record.bandage_id = $bandageId AND YEAR(humidity_record.creation_time) ='$year' AND MONTH(humidity_record.creation_time) = '$month' AND DAYOFMONTH(humidity_record.creation_time) = '$day' ORDER BY humidity_record.creation_time";
+    $q0 = "SELECT humidity_record.creation_time, humidity_record.value FROM humidity_record INNER JOIN bandage_record ON humidity_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND humidity_record.bandage_id = $bandageId AND YEAR(humidity_record.creation_time) ='$year' AND MONTH(humidity_record.creation_time) = '$month' AND DAYOFMONTH(humidity_record.creation_time) = '$day' ORDER BY humidity_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -32,7 +32,7 @@
 
   function getMoistureData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT creation_time, value FROM moisture_record WHERE bandage_id = $bandageId AND YEAR(creation_time) ='$year' AND MONTH(creation_time) = '$month' AND DAYOFMONTH(creation_time) = '$day' ORDER BY creation_time";
+    $q0 = "SELECT moisture_record.creation_time, moisture_record.value FROM moisture_record INNER JOIN bandage_record ON moisture_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND moisture_record.bandage_id = $bandageId AND YEAR(moisture_record.creation_time) ='$year' AND MONTH(moisture_record.creation_time) = '$month' AND DAYOFMONTH(moisture_record.creation_time) = '$day' ORDER BY moisture_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -73,5 +73,50 @@
     }else {
       return 0;
     }
+  }
+
+  function getNowMonthTemp($dbc,$patientId,$bandageId){
+    $errors = array();
+    $q0 = "SELECT temp_record.creation_time, temp_record.value FROM temp_record INNER JOIN bandage_record ON temp_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND temp_record.bandage_id = $bandageId AND YEAR(temp_record.creation_time) =YEAR(NOW()) AND MONTH(temp_record.creation_time) = MONTH(NOW()) ORDER BY temp_record.creation_time";
+    $r0 = mysqli_query($dbc,$q0);
+    if ($r0){
+      $labels = array();
+      $data = array();
+    while ($row = mysqli_fetch_array($r0, MYSQLI_ASSOC)) {
+      $labels[] = $row['creation_time'];
+      $data[] = $row['value'];
+    }
+    return array($labels,$data);
+  }
+  }
+
+  function getNowMonthHumidity($dbc,$patientId,$bandageId){
+    $errors = array();
+    $q0 = "SELECT humidity_record.creation_time, humidity_record.value FROM humidity_record INNER JOIN bandage_record ON humidity_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND humidity_record.bandage_id = $bandageId AND YEAR(humidity_record.creation_time) =YEAR(NOW()) AND MONTH(humidity_record.creation_time) = MONTH(NOW()) ORDER BY humidity_record.creation_time";
+    $r0 = mysqli_query($dbc,$q0);
+    if ($r0){
+      $labels = array();
+      $data = array();
+    while ($row = mysqli_fetch_array($r0, MYSQLI_ASSOC)) {
+      $labels[] = $row['creation_time'];
+      $data[] = $row['value'];
+    }
+    return array($labels,$data);
+  }
+  }
+
+  function getNowMonthMoisture($dbc,$patientId,$bandageId){
+    $errors = array();
+    $q0 = "SELECT moisture_record.creation_time, moisture_record.value FROM moisture_record INNER JOIN bandage_record ON moisture_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND moisture_record.bandage_id = $bandageId AND YEAR(moisture_record.creation_time) =YEAR(NOW()) AND MONTH(moisture_record.creation_time) = MONTH(NOW()) ORDER BY moisture_record.creation_time";
+    $r0 = mysqli_query($dbc,$q0);
+    if ($r0){
+      $labels = array();
+      $data = array();
+    while ($row = mysqli_fetch_array($r0, MYSQLI_ASSOC)) {
+      $labels[] = $row['creation_time'];
+      $data[] = $row['value'];
+    }
+    return array($labels,$data);
+  }
   }
  ?>
