@@ -49,6 +49,7 @@
 			$day = $date_stuff[1];
 			$year = $date_stuff[2];
 			$patient_id = $_GET['patient_id'];
+			$bandage_id = $_GET['bId'];
 		}
 		?>
     <h1 class="text-center">@UserName</h1>
@@ -83,9 +84,7 @@
 				<div class="form-group">
 					<label for="bId">Select Bandage:</label>
 					<select id="bId" class="form-control">
-					  <option>1</option>
-						<option>2</option>
-						<option>3</option>
+					  <?php echo getBandages($dbc,$patient_id); ?>
 					</select>
 				</div>
 			</div>
@@ -108,7 +107,7 @@
 				echo "<script>document.getElementById('patientMeasurements').className = 'tab-pane active' </script>";
 				list($templabels,$tempdata) = getTempData($dbc,$patient_id,88,$year,$month,$day);
 				echo $templabels;
-				
+
 				$temp_chart_data =  data2Chart($templabels,$tempdata,TempDataSet);
 
 				list($humiditylabels,$humiditydata) = getHumidityData($dbc,$patient_id,88,$year,$month,$day);
