@@ -107,6 +107,8 @@
 				echo "<script>document.getElementById('myHome').className = 'tab-pane' </script>";
 				echo "<script>document.getElementById('patientMeasurements').className = 'tab-pane active' </script>";
 				list($templabels,$tempdata) = getTempData($dbc,$patient_id,88,$year,$month,$day);
+				echo $templabels;
+				
 				$temp_chart_data =  data2Chart($templabels,$tempdata,TempDataSet);
 
 				list($humiditylabels,$humiditydata) = getHumidityData($dbc,$patient_id,88,$year,$month,$day);
