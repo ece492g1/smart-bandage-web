@@ -60,4 +60,18 @@
             .json_encode($data).'}]}';
             return $finalData;
   }
+
+  function getBandages($dbc,$patient_id){
+    $q = "SELECT bandage_id FROM bandage_record WHERE patient_id = $patient_id";
+    $r = mysqli_query($dbc,$q);
+    $option = "";
+    if($r) {
+      while ($row = mysqli_fetch_array($r,MYSQLI_ASSOC)) {
+        $option .= "<option>".$row['bandage_id']."</option>";
+      }
+      return $option;
+    }else {
+      return 0;
+    }
+  }
  ?>
