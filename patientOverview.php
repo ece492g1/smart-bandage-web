@@ -95,6 +95,9 @@
 			</form>
 			<script>
 			$('.input-group.date').datepicker({
+				autoclose: true,
+				endDate: '+1d',
+				startDate: '01/01/2016'
 			});
 			</script>
 			<?php
