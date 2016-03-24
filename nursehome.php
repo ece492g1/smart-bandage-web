@@ -52,12 +52,20 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="myHome"></div>
     <div role="tabpanel" class="tab-pane" id="patientManager">
-			<div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for Patient">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Search</button>
-      </span>
-    </div>
+
+			<form role="form" action="patientSearchResults.php" method="POST">
+			  <div class="form-group">
+					<div class="input-group">
+					<input type="text" id="searchParam" name="searchParam" class="form-control" placeholder="Search for Patient">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">Search</button>
+					</span>
+					</div>
+			  </div>
+			</form>
+
+
+
 		<?php
 			include('include/search_functions.php');
 			list($ok,$results) = getSubscriptions($dbc,$_SESSION['pid']);

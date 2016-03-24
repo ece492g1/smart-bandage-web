@@ -1,7 +1,7 @@
 <?php
   function patientSearch($dbc,$searchParam){
     $errors = array();
-    $q0 = "SELECT * from patient WHERE patient_id LIKE '%$seachParam%' OR first_name LIKE '%$searchParam%' OR last_name LIKE '%$searchParam%'";
+    $q0 = "SELECT patient_id AS 'Patient ID', last_name AS 'Last Name', first_name AS 'First Name' FROM patient WHERE patient_id LIKE '%$searchParam%' OR first_name LIKE '%$searchParam%' OR last_name LIKE '%$searchParam%'";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       return array(true,$r0);
@@ -12,6 +12,19 @@
   }
 
 
+  function getPatientInfo($dbc,$searchParam){
+    $errors = array();
+    $q0 = "SELECT * FROM patient WHERE patient_id = '$searchParam'";
+    $r0 = mysqli_query($dbc,$q0);
+    if (mysqli_num_rows($r0) == 1) {
+        $row = mysqli_fetch_array($r0,MYSQLI_ASSOC);
+        return array(true,$row);
+      }
+    else {
+        $errors[] = 'There is not a person with this pid';
+        return array(false,$errors);
+      }
+  }
 function tabulateResultSet($rs){
   $info = mysqli_fetch_fields($rs);
   $table = "<table class='table table-striped table-bordered'>";
@@ -51,5 +64,5 @@ function getSubscriptions($dbc,$pid){
 
   }
 
-  
+
  ?>

@@ -75,6 +75,17 @@
     }
   }
 
+  function hasBandages($dbc,$patient_id){
+    $q = "SELECT * FROM bandage_record WHERE patient_id = $patient_id";
+    $r = mysqli_query($dbc,$q);
+    if (mysqli_num_rows($r) >= 1) {
+        return true;
+      }
+    else {
+        return false;
+      }
+  }
+
   function getNowMonthTemp($dbc,$patientId,$bandageId){
     $errors = array();
     $q0 = "SELECT temp_record.creation_time, temp_record.value FROM temp_record INNER JOIN bandage_record ON temp_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND temp_record.bandage_id = $bandageId AND YEAR(temp_record.creation_time) =YEAR(NOW()) AND MONTH(temp_record.creation_time) = MONTH(NOW()) ORDER BY temp_record.creation_time";

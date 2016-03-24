@@ -3,6 +3,7 @@
 	require('include/login_functions.php');
 	require('../sql_connect.php');
 	include('include/data_dsp_functions.php');
+	include('include/search_functions.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'n'){
 			redirect_user();
@@ -61,7 +62,15 @@
 			$bandage_id = $_GET['bId'];
 		}
 		?>
-    <h1 class="text-center">@UserName</h1>
+    <h1 class="text-center">Patient Overview</h1>
+		<h3 class="text-center">
+			<?php
+			list($ok,$patientInfo) = getPatientInfo($dbc,$patient_id);
+			if ($ok){
+				echo $patientInfo['last_name'].", ". $patientInfo['first_name'];
+			}
+			?>
+		</h3>
 		<div class=container>
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active" id="myHomeTab"><a data-toggle="tab" href="#myHome">Patient Home</a></li>
@@ -75,7 +84,6 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="myHome"></div>
     <div role="tabpanel" class="tab-pane" id="patientMeasurements">
-
 			<form role="form" action="patientOverview.php" method="GET">
 				<div class="row">
 					<div class="col-md-6">
@@ -101,6 +109,9 @@
 				<input type="hidden" id='patient_id' name="patient_id" class="form-control" value=<?php echo "'$patient_id'"; ?>>
 			  <button type="submit" class="btn btn-default">Go!</button>
 			</form>
+			<?php if (!hasBandages($dbc,$patient_id)){
+				echo "<h3>This patient has no bandages</h3><br/><p> If you are certain they are assigned to a smart bandage contact an admin</p>";
+			} ?>
 			<script>
 			$('.input-group.date').datepicker({
 				autoclose: true,
