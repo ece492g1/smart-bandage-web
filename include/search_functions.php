@@ -60,9 +60,34 @@ function getSubscriptions($dbc,$pid){
       }
   }
 
-  function getDisabledDates($patient_id){
-
+  function getAlerts($dbc,$user){
+    $errors = array();
+    $q = "SELECT new_alerts.record_id, patient.first_name, patient.last_name, bandage_record.bandage_id, new_alerts.alert_type, new_alerts.viewed, new_alerts.value, new_alerts.creation_time FROM subscriptions INNER JOIN bandage_record ON subscriptions.patient_id = bandage_record.patient_id INNER JOIN new_alerts ON new_alerts.bandage_id = bandage_record.bandage_id INNER JOIN patient ON patient.patient_id = bandage_record.patient_id AND subscriptions.care_provider = $user";
+    $r = mysqli_query($dbc,$q);
+    if ($r){
+      $errors[] = "Query Executed Successfully";
+      return $r;
+    }else {
+      return 0;
+    }
   }
+
+  function generateAlerts($rs){
+    $alert = "";
+    while ($row = mysqli_fetch_array($rs, MYSQLI_ASSOC)) {
+      $alert.= '<div class="alert alert-danger" role="alert">';
+      $alert.= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+      $alert.= '<span aria-hidden="true">&times;</span>';
+      $alert.= '</button>';
+      $alert.= "<h5> ALERT! ". $row['first_name']. " " . $row['last_name'] . " has an unusual reading on bandage " .$row['bandage_id']. " with a temp of ".$row['value']. "</h5>";
+      $alert.= '<button type="button" name="button" class="btn btn-danger">Details</button>';
+      $alert.= '</div>';
+
+    }
+    return $alert;
+  }
+
+
 
 
  ?>
