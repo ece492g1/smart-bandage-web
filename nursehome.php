@@ -58,7 +58,18 @@
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myHome"></div>
+    <div role="tabpanel" class="tab-pane active" id="myHome">
+			<br/>
+			<br/>
+			<?php
+				include('include/search_functions.php');
+				echo generateAlerts(getAlerts($dbc,$_SESSION['pid']));
+			 ?>
+			<script>
+				$().alert();
+
+			</script>
+		</div>
     <div role="tabpanel" class="tab-pane" id="patientManager">
 
 			<form role="form" action="patientSearchResults.php" method="POST">
@@ -75,7 +86,7 @@
 
 
 		<?php
-			include('include/search_functions.php');
+
 			list($ok,$results) = getSubscriptions($dbc,$_SESSION['pid']);
 			if ($ok){
 				echo tabulateResultSet($results);
