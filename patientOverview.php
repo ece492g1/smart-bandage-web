@@ -4,6 +4,7 @@
 	require('../sql_connect.php');
 	include('include/data_dsp_functions.php');
 	include('include/search_functions.php');
+	include('include/subscription_functions.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'n'){
 			redirect_user();
@@ -82,7 +83,22 @@
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myHome"></div>
+    <div role="tabpanel" class="tab-pane active" id="myHome">
+			<br/ >
+		<form role="form" action=<?php if (isSubscribedToPatient($dbc,$_SESSION['pid'],$patient_id)){
+			echo "'unsubscribe.php'";
+		}else {
+			echo "'subscribe.php'";
+		} ?> method="POST">
+			<input type="hidden" name="patient_id" value=<?php echo "'$patient_id'"; ?>>
+			<input type="hidden" name="user" value=<?php echo "'".$_SESSION['pid']."'"; ?>>
+			<button type="submit" class="btn btn-success"><?php if (isSubscribedToPatient($dbc,$_SESSION['pid'],$patient_id)){
+				echo "Unsubscribe";
+			}else {
+				echo "Subscribe";
+			} ?></button>
+		</form>
+		</div>
     <div role="tabpanel" class="tab-pane" id="patientMeasurements">
 			<form role="form" action="patientOverview.php" method="GET">
 				<div class="row">

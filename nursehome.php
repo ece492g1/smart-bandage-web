@@ -39,7 +39,15 @@
     <?php
 		include('include/navbar.php');
 		?>
-    <h1 class="text-center">@UserName</h1>
+    <h1 class="text-center">Signed in as:
+			<?php
+				include('include/account_functions.php');
+				list($stat,$res) = getUserInfo($dbc,$_SESSION['pid']);
+				if ($stat){
+					echo $res['first_name']. " " . $res['last_name'];
+				}
+			 ?>
+		</h1>
 		<div class=container>
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myHome">My Home</a></li>

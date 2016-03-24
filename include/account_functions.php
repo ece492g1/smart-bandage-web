@@ -20,12 +20,9 @@
 
 		$q = "SELECT * FROM users WHERE provider_id ='$pid'";
         $r = @mysqli_query($dbc,$q);
-
-
         if (mysqli_num_rows($r) == 1) {
             $row = mysqli_fetch_array($r,MYSQLI_ASSOC);
             return array(true,$row);
-
 			}
         else {
             $errors[] = 'There is not a person with this pid';

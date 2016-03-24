@@ -78,12 +78,16 @@
   function hasBandages($dbc,$patient_id){
     $q = "SELECT * FROM bandage_record WHERE patient_id = $patient_id";
     $r = mysqli_query($dbc,$q);
+    if( $r){
     if (mysqli_num_rows($r) >= 1) {
         return true;
       }
     else {
         return false;
       }
+    }else {
+      return false;
+    }
   }
 
   function getNowMonthTemp($dbc,$patientId,$bandageId){
