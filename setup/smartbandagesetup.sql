@@ -31,7 +31,10 @@ CREATE TABLE patient (
   patient_id INT(5) UNSIGNED AUTO_INCREMENT,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
+  age INT(3),
+  gender CHAR(1),
   PRIMARY KEY (patient_id),
+  CHECK (gender in ('m','f')),
   CONSTRAINT pat UNIQUE(first_name,last_name)
 );
 

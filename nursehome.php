@@ -100,4 +100,5 @@
 
   </div>
   </body>
+	<?php mysqli_close($dbc);?>
 </html>
