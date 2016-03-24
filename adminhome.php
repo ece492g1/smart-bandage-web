@@ -1,12 +1,10 @@
-<?php #login page
-// This page processes the login form and redirects the user based on which role they have
+<?php
 	require('include/login_functions.php');
 	require('../sql_connect.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'a'){
 			redirect_user();
 		}
-
 ?>
 <html lang="en">
   <head>
@@ -17,15 +15,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 		<script src="Chart.js"></script>
+
     <title>Admin Console</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/dist/custom/css/sb.css" rel="stylesheet">
-
 
     <!-- Custom styles for this template -->
-    <!--<link href="/dist/custom/css/signin.css" rel="stylesheet">-->
+		<link href="/dist/custom/css/sb.css" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -35,14 +33,19 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
-
 		<?php
 		include('include/navbar.php');
-		include('include/data_dsp_functions.php');
 		?>
-    <h1 class="text-center">@UserName</h1>
+		<h1 class="text-center">Signed in as:
+			<?php
+				include('include/account_functions.php');
+				list($stat,$res) = getUserInfo($dbc,$_SESSION['pid']);
+				if ($stat){
+					echo $res['first_name']. " " . $res['last_name'];
+				}
+			 ?>
+		</h1>
 		<div class="container">
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#myHome">My Home</a></li>
@@ -53,26 +56,20 @@
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active bs-example" id="myHome">My home will just show
-		basic information about current user data </div>
-    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">
-			<?php
-				list($labels,$data) = getTempData($dbc,1,88,2016,March,15);
-				$chart_data =  data2Chart($labels,$data,Sample_Dataset);
-				?>
-				<div style="display:flex;justify-content:center;align-items:center;">
-  				<div><canvas id="myChart" width="800" height="600"></canvas></div>
-				</div>
-
-				<script>
-					var ctx = document.getElementById("myChart").getContext("2d");
-					var myNewChart = new Chart(ctx).Line(<?php echo $chart_data ?>);
-				</script>
-
-
+    <div role="tabpanel" class="tab-pane active bs-example" id="myHome">
+			<p><b>Interesting Data for Admins:</b></p>
+			<br />
+			<p> Users active today: # </p>
+			<br />
+			<p> Bandages to Date: # </p>
+			<br />
+			<p> Alerts for today: # </p>
+			<br />
+			<p><b>Anything else you can think of?</b></p>
 		</div>
-    <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">Search to lookup nurses</div>
-		<div role="tabpanel" class="tab-pane" id="settings">
+    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">Search to find/edit Patient Info</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">Search to find/edit Nurse Info</div>
+		<div role="tabpanel" class="tab-pane bs-example" id="settings">
 			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
 		</div>
   </div>
