@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require('../sql_connect.php');
     if (!isset($_SESSION['email'])){
         require('include/login_functions.php');
         redirect_user();
@@ -24,7 +25,6 @@
 
         if (empty($errors)){ //there were no errors so continue to change the password
             if ( $new_pass_1c == $new_pass_2c){
-                require('../sql_connect.php');
                 require('include/account_functions.php');
                 $email = $_SESSION['email'];
                 list($ok,$errorslog) = changePassword($dbc,$email,$old_pass_c,$new_pass_1c);
@@ -80,10 +80,22 @@
         <input type="password" id="new_pass_2" name="new_pass_2" class="form-control" placeholder="Confirm Password" required>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        <?php
+          if (!empty($errors)){
+            foreach ($errors as $ms) {
+              echo "<p>$ms</p>";
+            }
+          }
+          if (!empty($errorslog)){
+            foreach ($errorslog as $msg) {
+              echo "<p>$msg</p>";
+            }
+          }
+         ?>
       </form>
 
     </div> <!-- /container -->
 
-
+    <?php mysqli_close($dbc); ?>
   </body>
 </html>
