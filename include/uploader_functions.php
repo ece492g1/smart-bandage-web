@@ -42,4 +42,17 @@ function addHumidity($dbc,$bandage_id,$sensor_id,$creation_time,$value){
   }
 }
 
+function addAlert($dbc,$bandage_id,$alert_type,$creation_time,$value){
+  $errors = array();
+  $q = "INSERT INTO new_alerts (bandage_id,alert_type,creation_time,viewed,value) VALUES ($bandage_id,'$alert_type',$creation_time,0,$value)";
+  $r = mysqli_query($dbc,$q);
+  if ($r){
+    $errors[] = "Alert added successfully";
+    return array(true,$errors);
+  }else {
+    $errors[] ="Alert not added";
+    return array(false,$errors);
+  }
+}
+
  ?>

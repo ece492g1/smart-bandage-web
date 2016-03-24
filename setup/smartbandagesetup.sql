@@ -80,15 +80,13 @@ CREATE TABLE bandage_record (
 
 CREATE TABLE new_alerts (
   record_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  patient_id INT(5) UNSIGNED NOT NULL,
   bandage_id INT(5) UNSIGNED NOT NULL,
   alert_type CHAR(1) NOT NULL,
   creation_time DATETIME,
   viewed boolean NOT NULL,
   viewed_by_user INT(5) UNSIGNED NOT NULL,
-  CHECK (alert_type in ('h','t','m','r')),
+  CHECK (alert_type in ('h','t','m')),
   value FLOAT(8,4) NOT NULL,
   PRIMARY KEY (record_id),
-  FOREIGN KEY (patient_id) REFERENCES patient(patient_id),
   FOREIGN KEY (viewed_by_user) REFERENCES users(provider_id)
 );
