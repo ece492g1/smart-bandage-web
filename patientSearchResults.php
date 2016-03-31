@@ -2,7 +2,7 @@
 require('include/login_functions.php');
 require('../sql_connect.php');
 session_start();
-  if ($_SESSION['user_type'] != 'n'){
+  if (!isset($_SESSION['user_type'])){
     redirect_user();
   }
 
