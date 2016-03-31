@@ -53,22 +53,22 @@
 		</h3>
 		<div class=container>
     <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="active" id="myHomeTab"><a data-toggle="tab" href="#myHome">Patient Home</a></li>
-      <li role="presentation" id = "patientMeasurementsTab"><a data-toggle="tab" href="#patientMeasurements">Patient Measurements</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#visitHistory">Visit History</a></li>
+      <li role="presentation" class="active" id="myHomeTab"><a data-toggle="tab" href="#userHome">User Info</a></li>
+      <li role="presentation" id = "patientMeasurementsTab"><a data-toggle="tab" href="#userSubscriptions">User Subscriptions</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#loginHistory">Login History</a></li>
 			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
 
     </ul>
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myHome">
+    <div role="tabpanel" class="tab-pane active" id="userHome">
 
 		</div>
-    <div role="tabpanel" class="tab-pane" id="patientMeasurements">
+    <div role="tabpanel" class="tab-pane" id="userSubscriptions">
 
 		</div>
-    <div role="tabpanel" class="tab-pane" id="visitHistory"></div>
+    <div role="tabpanel" class="tab-pane" id="loginHistory"></div>
 		<div role="tabpanel" class="tab-pane" id="settings"></div>
   </div>
 
