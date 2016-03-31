@@ -1,10 +1,11 @@
 <?php
+	session_start();
 	require('include/login_functions.php');
 	require('../sql_connect.php');
-	session_start();
 		if ($_SESSION['user_type'] != 'a'){
 			redirect_user();
 		}
+		include('include/adminhome_functions.php');
 ?>
 <html lang="en">
   <head>
@@ -59,11 +60,35 @@
     <div role="tabpanel" class="tab-pane active bs-example" id="myHome">
 			<p><b>Interesting Data for Admins:</b></p>
 			<br />
-			<p> Users active today: # </p>
+			<p> Users active today:
+			<?php
+				list ($hasLogins,$numLogins) = getTodayUsers($dbc);
+				if ($hasLogins){
+					echo $numLogins;
+				}
+			 ?></p>
 			<br />
-			<p> Bandages to Date: # </p>
+			<p> Bandages to Date:
+				<?php
+					list ($hasBandages,$numBandages) = getNumberBandages($dbc);
+					if ($hasBandages){
+						echo $numBandages;
+					}else {
+						echo "0";
+					}
+				 ?>
+			 </p>
 			<br />
-			<p> Alerts for today: # </p>
+			<p> Alerts for today:
+				<?php
+					list ($hasAlerts,$numAlerts) = getTodaysAlerts($dbc);
+					if ($hasAlerts){
+						echo $numAlerts;
+					}else {
+						echo "0";
+					}
+				 ?>
+			 </p>
 			<br />
 			<p><b>Anything else you can think of?</b></p>
 		</div>
