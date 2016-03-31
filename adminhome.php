@@ -90,10 +90,31 @@
 				 ?>
 			 </p>
 			<br />
-			<p><b>Anything else you can think of?</b></p>
 		</div>
-    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">Search to find/edit Patient Info</div>
-    <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">Search to find/edit Nurse Info</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">
+			<form role="form" action="patientSearchResults.php" method="POST">
+			<div class="form-group">
+				<div class="input-group">
+				<input type="text" id="searchParam" name="searchParam" class="form-control" placeholder="Search for Patient">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Search</button>
+				</span>
+				</div>
+			</div>
+		</form>
+	</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">
+			<form role="form" action="nurseSearchResults.php" method="POST">
+				<div class="form-group">
+					<div class="input-group">
+					<input type="text" id="searchParam" name="searchParam" class="form-control" placeholder="Search for Nurse">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">Search</button>
+					</span>
+					</div>
+				</div>
+			</form>
+		</div>
 		<div role="tabpanel" class="tab-pane bs-example" id="settings">
 			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
 		</div>
