@@ -78,7 +78,7 @@
 		$errors = array();
 
 		$q1 = "SELECT email, password FROM users WHERE email = '$email' AND password = '$oldpass'";
-		$r1 = mysqli_query($dbc,$q1);
+		$r1 = @mysqli_query($dbc,$q1);
     if ($r1){
 		if (mysqli_num_rows($r1) == 1 ){
 
