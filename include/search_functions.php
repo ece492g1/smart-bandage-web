@@ -125,13 +125,42 @@ function getSubscriptions($dbc,$pid){
       $alert.= '<span aria-hidden="true">&times;</span>';
       $alert.= '</button>';
       $alert.= "<h5> ALERT! ". $row['first_name']. " " . $row['last_name'] . " has an unusual reading on bandage " .$row['bandage_id']. " with a value of ".$row['value']. "</h5>";
-      $alert.= '<button type="button" name="button" class="btn btn-danger">Details</button>';
+      $alert.= '<form role="form" action="alertOverview.php" method="POST">';
+      $alert.= '<input type="hidden" id="alert_id" name="alert_id" value="' . $row['record_id'] .'">';
+      $alert.= '<button type="submit" name="button" class="btn btn-danger">Details</button>';
+      $alert.= '</form>';
       $alert.= '</div>';
 
     }
     return $alert;
   }
 
+  function getAlertById($dbc,$id){
+    $errors = array();
+    $q = "SELECT * FROM new_alerts WHERE record_id = $id";
+    $r = mysqli_query($dbc,$q);
+    if ($r){
+      $errors[] = "Query Executed Successfully";
+      $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+      return array(true,$row);
+    }else {
+      $errors[] = "Query Unsuccessful";
+      return array(false,$errors);
+    }
+  }
+
+  function markAlertViewed($dbc,$id,$user){
+    $errors = array();
+    $q = "UPDATE new_alerts SET viewed='1', viewed_by_user=$user WHERE record_id = '$id'";
+    $r = mysqli_query($dbc,$q);
+    if ($r){
+      $errors[] = "Query Executed Successfully";
+      return array(true,$errors);
+    }else {
+      $errors[] = "Query Unsuccessful";
+      return array(false,$errors);
+    }
+  }
 
 
 
