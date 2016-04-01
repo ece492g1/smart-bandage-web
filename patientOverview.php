@@ -161,7 +161,7 @@
 						</div>';
 						echo "<script>
 										var ctx = document.getElementById('monthTempChart').getContext('2d');
-										var myNewChart = new Chart(ctx).Line($temp_month_data);
+										var myNewChart = new Chart(ctx).Line($temp_month_data,{animation:false});
 									</script>";
 					}
 
@@ -172,7 +172,7 @@
 						</div>';
 						echo "<script>
 										var ctx = document.getElementById('monthHumidityChart').getContext('2d');
-										var myNewChart = new Chart(ctx).Line($humidity_month_data,{scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
+										var myNewChart = new Chart(ctx).Line($humidity_month_data,{animation:false,scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
 									</script>";
 					}
 
@@ -183,7 +183,7 @@
 						</div>';
 						echo "<script>
 										var ctx = document.getElementById('monthMoistureChart').getContext('2d');
-										var myNewChart = new Chart(ctx).Line($moisture_month_data,{scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
+										var myNewChart = new Chart(ctx).Line($moisture_month_data,{animation:false,scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
 									</script>";
 					}
 				}
@@ -194,7 +194,7 @@
 					</div>';
 					echo "<script>
 									var ctx = document.getElementById('tempChart').getContext('2d');
-									var myNewChart = new Chart(ctx).Line($temp_chart_data);
+									var myNewChart = new Chart(ctx).Line($temp_chart_data,{animation:false});
 								</script>";
 				}
 
@@ -205,7 +205,7 @@
 					</div>';
 					echo "<script>
 									var ctx = document.getElementById('humidityChart').getContext('2d');
-									var myNewChart = new Chart(ctx).Line($humidity_chart_data,{scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
+									var myNewChart = new Chart(ctx).Line($humidity_chart_data,{animation:false,scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
 								</script>";
 				}
 				if (count($moistureaverage) != 0){
@@ -215,7 +215,7 @@
 						</div>';
 					echo "<script>
 									var ctx = document.getElementById('moistureChart').getContext('2d');
-									var myNewChart = new Chart(ctx).Line($moisture_chart_data,{scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
+									var myNewChart = new Chart(ctx).Line($moisture_chart_data,{animation:false,scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
 								</script>";
 				}
 			?>

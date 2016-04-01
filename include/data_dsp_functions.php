@@ -1,7 +1,7 @@
 <?php
   function getTempData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT temp_record.creation_time, AVG(temp_record.value) AS 'average', MIN(temp_record.value) AS 'min', MAX(temp_record.value) AS 'max' FROM temp_record INNER JOIN bandage_record ON temp_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND temp_record.bandage_id = $bandageId AND YEAR(temp_record.creation_time) ='$year' AND MONTH(temp_record.creation_time) = '$month' AND DAYOFMONTH(temp_record.creation_time) = '$day' GROUP BY temp_record.creation_time ORDER BY temp_record.creation_time";
+    $q0 = "SELECT TIME(temp_record.creation_time) AS 'time', AVG(temp_record.value) AS 'average', MIN(temp_record.value) AS 'min', MAX(temp_record.value) AS 'max' FROM temp_record INNER JOIN bandage_record ON temp_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND temp_record.bandage_id = $bandageId AND YEAR(temp_record.creation_time) ='$year' AND MONTH(temp_record.creation_time) = '$month' AND DAYOFMONTH(temp_record.creation_time) = '$day' GROUP BY SECOND(temp_record.creation_time) ORDER BY temp_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -9,7 +9,7 @@
       $min = array();
       $max = array();
     while ($row = mysqli_fetch_array($r0, MYSQLI_ASSOC)) {
-      $labels[] = $row['creation_time'];
+      $labels[] = $row['time'];
       $average[] = $row['average'];
       $min[] = $row['min'];
       $max[] = $row['max'];
@@ -21,7 +21,7 @@
 
   function getHumidityData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT humidity_record.creation_time, AVG(humidity_record.value) AS 'average', MIN(humidity_record.value) AS 'min', MAX(humidity_record.value) AS 'max' FROM humidity_record INNER JOIN bandage_record ON humidity_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND humidity_record.bandage_id = $bandageId AND YEAR(humidity_record.creation_time) ='$year' AND MONTH(humidity_record.creation_time) = '$month' AND DAYOFMONTH(humidity_record.creation_time) = '$day' GROUP BY humidity_record.creation_time ORDER BY humidity_record.creation_time";
+    $q0 = "SELECT TIME(humidity_record.creation_time) AS 'time', AVG(humidity_record.value) AS 'average', MIN(humidity_record.value) AS 'min', MAX(humidity_record.value) AS 'max' FROM humidity_record INNER JOIN bandage_record ON humidity_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND humidity_record.bandage_id = $bandageId AND YEAR(humidity_record.creation_time) ='$year' AND MONTH(humidity_record.creation_time) = '$month' AND DAYOFMONTH(humidity_record.creation_time) = '$day' GROUP BY SECOND(humidity_record.creation_time) ORDER BY humidity_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -29,7 +29,7 @@
       $min = array();
       $max = array();
     while ($row = mysqli_fetch_array($r0, MYSQLI_ASSOC)) {
-      $labels[] = $row['creation_time'];
+      $labels[] = $row['time'];
       $average[] = $row['average'];
       $min[] = $row['min'];
       $max[] = $row['max'];
@@ -40,7 +40,7 @@
 
   function getMoistureData($dbc,$patientId,$bandageId,$year,$month,$day){
     $errors = array();
-    $q0 = "SELECT moisture_record.creation_time, AVG(moisture_record.value) AS 'average', MIN(moisture_record.value) AS 'min', MAX(moisture_record.value) AS 'max' FROM moisture_record INNER JOIN bandage_record ON moisture_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND moisture_record.bandage_id = $bandageId AND YEAR(moisture_record.creation_time) ='$year' AND MONTH(moisture_record.creation_time) = '$month' AND DAYOFMONTH(moisture_record.creation_time) = '$day' GROUP BY moisture_record.creation_time ORDER BY moisture_record.creation_time";
+    $q0 = "SELECT TIME(moisture_record.creation_time) AS 'time', AVG(moisture_record.value) AS 'average', MIN(moisture_record.value) AS 'min', MAX(moisture_record.value) AS 'max' FROM moisture_record INNER JOIN bandage_record ON moisture_record.bandage_id = bandage_record.bandage_id WHERE bandage_record.patient_id = $patientId AND moisture_record.bandage_id = $bandageId AND YEAR(moisture_record.creation_time) ='$year' AND MONTH(moisture_record.creation_time) = '$month' AND DAYOFMONTH(moisture_record.creation_time) = '$day' GROUP BY SECOND(moisture_record.creation_time) ORDER BY moisture_record.creation_time";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       $labels = array();
@@ -48,7 +48,7 @@
       $min = array();
       $max = array();
     while ($row = mysqli_fetch_array($r0, MYSQLI_ASSOC)) {
-      $labels[] = $row['creation_time'];
+      $labels[] = $row['time'];
       $average[] = $row['average'];
       $min[] = $row['min'];
       $max[] = $row['max'];
