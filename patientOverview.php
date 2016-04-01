@@ -11,14 +11,14 @@
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$patient_id = $_POST['patient_id'];
-			list($tempmonthlabels,$tempmonthdata) = getNowMonthTemp($dbc,$patient_id,88);
-			$temp_month_data =  data2Chart($tempmonthlabels,$tempmonthdata,MonthTempDataSet);
+			list($tempmonthlabels,$tempmonthdataaverage,$tempmonthdatamin,$tempmonthdatamax) = getNowMonthTemp($dbc,$patient_id,$patient_id);
+			$temp_month_data =  data2Chart($tempmonthlabels,$tempmonthdataaverage,$tempmonthdatamin,$tempmonthdatamax,MonthTempDataSet);
 
-			list($humiditymonthlabels,$humiditymonthdata) = getNowMonthHumidity($dbc,$patient_id,88);
-			$humidity_month_data =  data2Chart($humiditymonthlabels,$humiditymonthdata,MonthHumidityDataSet);
+			list($humiditymonthlabels,$humiditymonthaverage,$humiditymonthmin,$humiditymonthmax) = getNowMonthHumidity($dbc,$patient_id,$patient_id);
+			$humidity_month_data =  data2Chart($humiditymonthlabels,$humiditymonthaverage,$humiditymonthmin,$humiditymonthmax,MonthHumidityDataSet);
 
-			list($moisturemonthlabels,$moisturemonthdata) = getNowMonthMoisture($dbc,$patient_id,88);
-			$moisture_month_data =  data2Chart($moisturemonthlabels,$moisturemonthdata,MonthMoistureDataSet);
+			list($moisturemonthlabels,$moisturemonthaverage,$moisturemonthmin,$moisturemonthmax) = getNowMonthMoisture($dbc,$patient_id,$patient_id);
+			$moisture_month_data =  data2Chart($moisturemonthlabels,$moisturemonthaverage,$moisturemonthmin,$moisturemonthmax,MonthMoistureDataSet);
 		}
 ?>
 <html lang="en">
@@ -142,19 +142,19 @@
 				echo "<script>document.getElementById('myHome').className = 'tab-pane' </script>";
 				echo "<script>document.getElementById('patientMeasurements').className = 'tab-pane active' </script>";
 
-				list($templabels,$tempdata) = getTempData($dbc,$patient_id,$bandage_id,$year,$month,$day);
-				$temp_chart_data =  data2Chart($templabels,$tempdata,TempDataSet);
+				list($templabels,$tempaverage,$tempmin,$tempmax) = getTempData($dbc,$patient_id,$bandage_id,$year,$month,$day);
+				$temp_chart_data =  data2Chart($templabels,$tempaverage,$tempmin,$tempmax,TempDataSet);
 
-				list($humiditylabels,$humiditydata) = getHumidityData($dbc,$patient_id,$bandage_id,$year,$month,$day);
-				$humidity_chart_data =  data2Chart($humiditylabels,$humiditydata,HumidityDataset);
+				list($humiditylabels,$humidityaverage,$humiditymin,$humiditymax) = getHumidityData($dbc,$patient_id,$bandage_id,$year,$month,$day);
+				$humidity_chart_data =  data2Chart($humiditylabels,$humidityaverage,$humiditymin,$humiditymax,HumidityDataset);
 
-				list($moisturelabels,$moisturedata) = getMoistureData($dbc,$patient_id,$bandage_id,$year,$month,$day);
-				$moisture_chart_data =  data2Chart($moisturelabels,$moisturedata,MoistureDataset);
+				list($moisturelabels,$moistureaverage,$moisturemin,$moisturemax) = getMoistureData($dbc,$patient_id,$bandage_id,$year,$month,$day);
+				$moisture_chart_data =  data2Chart($moisturelabels,$moistureaverage,$moisturemin,$moisturemax,MoistureDataset);
 			}
 			?>
 			<?php
 				if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-					if (count($tempmonthdata) != 0){
+					if (count($tempmonthaverage) != 0){
 						echo "<h1 class='text-center'>Temp Readings for Current Month</h1>";
 						echo '<div style="display:flex;justify-content:center;align-items:center;">
 							<div><canvas id="monthTempChart" width="800" height="600"></canvas></div>
@@ -165,7 +165,7 @@
 									</script>";
 					}
 
-					if (count($humiditymonthdata) != 0){
+					if (count($humiditymonthaverage) != 0){
 						echo "<h1 class='text-center'>Humidity Readings for Current Month</h1>";
 						echo '<div style="display:flex;justify-content:center;align-items:center;">
 							<div><canvas id="monthHumidityChart" width="800" height="600"></canvas></div>
@@ -176,7 +176,7 @@
 									</script>";
 					}
 
-					if (count($moisturemonthdata) != 0){
+					if (count($moisturemonthaverage) != 0){
 						echo "<h1 class='text-center'>Moisture Readings for Current Month</h1>";
 						echo '<div style="display:flex;justify-content:center;align-items:center;">
 							<div><canvas id="monthMoistureChart" width="800" height="600"></canvas></div>
@@ -187,7 +187,7 @@
 									</script>";
 					}
 				}
-				if (count($tempdata) != 0){
+				if (count($tempaverage) != 0){
 					echo "<h1 class='text-center'>Bandage $bandage_id, Temp Readings for $date</h1>";
 					echo '<div style="display:flex;justify-content:center;align-items:center;">
 						<div><canvas id="tempChart" width="800" height="600"></canvas></div>
@@ -198,7 +198,7 @@
 								</script>";
 				}
 
-				if (count($humiditydata) != 0){
+				if (count($humidityaverage) != 0){
 					echo "<h1 class='text-center'>Bandage $bandage_id, Humidity Readings for $date</h1>";
 					echo '<div style="display:flex;justify-content:center;align-items:center;">
 						<div><canvas id="humidityChart" width="800" height="600"></canvas></div>
@@ -208,7 +208,7 @@
 									var myNewChart = new Chart(ctx).Line($humidity_chart_data,{scaleOverride:true,scaleSteps:10,scaleStepWidth:10,scaleStartValue:0});
 								</script>";
 				}
-				if (count($moisturedata) != 0){
+				if (count($moistureaverage) != 0){
 					echo "<h1 class='text-center'>Bandage $bandage_id, Moisture Readings for $date</h1>";
 					echo '<div style="display:flex;justify-content:center;align-items:center;">
 						<div><canvas id="moistureChart" width="800" height="600"></canvas></div>
