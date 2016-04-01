@@ -6,7 +6,7 @@
 	include('include/search_functions.php');
 	include('include/subscription_functions.php');
 	session_start();
-		if (!issset($_SESSION['user_type'])){
+		if (!isset($_SESSION['user_type'])){
 			redirect_user();
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){

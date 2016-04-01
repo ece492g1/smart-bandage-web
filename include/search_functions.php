@@ -13,7 +13,7 @@
 
   function nurseSearch($dbc,$searchParam){
     $errors = array();
-    $q0 = "SELECT provider_id AS 'Provider_ID', last_name AS 'Last Name', first_name AS 'First Name', user_type AS 'USER TYPE' FROM users WHERE provider_id LIKE '%$searchParam%' OR first_name LIKE '%$searchParam%' OR last_name LIKE '%$searchParam%' AND user_type = 'n'";
+    $q0 = "SELECT provider_id AS 'Provider ID', last_name AS 'Last Name', first_name AS 'First Name', user_type AS 'USER TYPE' FROM users WHERE (user_type = 'n') AND (provider_id LIKE '%$searchParam%' OR first_name LIKE '%$searchParam%' OR last_name LIKE '%$searchParam%')";
     $r0 = mysqli_query($dbc,$q0);
     if ($r0){
       return array(true,$r0);

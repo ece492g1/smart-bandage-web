@@ -45,7 +45,7 @@ session_start();
  		<div class=container>
       <?php
         include('include/search_functions.php');
-        list($ok,$results) = patientSearch($dbc,$_POST['searchParam']);
+        list($ok,$results) = patientSearch($dbc,$_POST['searchPatientParam']);
         if ($ok){
           echo tabulateResultSet($results);
         }else {

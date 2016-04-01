@@ -71,7 +71,7 @@
 					<form role="form" action="patientSearchResults.php" method="POST">
 					  <div class="form-group">
 							<div class="input-group">
-							<input type="text" id="searchParam" name="searchParam" class="form-control" placeholder="Search for Patient">
+							<input type="text" id="searchPatientParam" name="searchPatientParam" class="form-control" placeholder="Search for Patient">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit">Search</button>
 							</span>
