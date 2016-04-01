@@ -92,10 +92,12 @@
 			<br />
 		</div>
     <div role="tabpanel" class="tab-pane bs-example" id="patientManager">
+			<a href="newPatient.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Patient</a>
 			<form role="form" action="patientSearchResults.php" method="POST">
 			<div class="form-group">
+				<label for="searchPatientParam"> Patient Lookup: </label>
 				<div class="input-group">
-				<input type="text" id="searchParam" name="searchParam" class="form-control" placeholder="Search for Patient">
+				<input type="text" id="searchPatientParam" name="searchPatientParam" class="form-control" placeholder="Search for Patient">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="submit">Search</button>
 				</span>
@@ -104,10 +106,12 @@
 		</form>
 	</div>
     <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">
+			<a href="newUser.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New User</a>
 			<form role="form" action="nurseSearchResults.php" method="POST">
 				<div class="form-group">
+					<label for="searchNurseParam"> Nurse Lookup: </label>
 					<div class="input-group">
-					<input type="text" id="searchParam" name="searchParam" class="form-control" placeholder="Search for Nurse">
+					<input type="text" id="searchNurseParam" name="searchNurseParam" class="form-control" placeholder="Search for Nurse">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="submit">Search</button>
 					</span>
