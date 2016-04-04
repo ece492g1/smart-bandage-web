@@ -11,13 +11,13 @@
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$patient_id = $_POST['patient_id'];
-			list($tempmonthlabels,$tempmonthdataaverage,$tempmonthdatamin,$tempmonthdatamax) = getNowMonthTemp($dbc,$patient_id,$patient_id);
+			list($tempmonthlabels,$tempmonthdataaverage,$tempmonthdatamin,$tempmonthdatamax) = getNowMonthTemp($dbc,$patient_id,14);
 			$temp_month_data =  data2Chart($tempmonthlabels,$tempmonthdataaverage,$tempmonthdatamin,$tempmonthdatamax,MonthTempDataSet);
 
-			list($humiditymonthlabels,$humiditymonthaverage,$humiditymonthmin,$humiditymonthmax) = getNowMonthHumidity($dbc,$patient_id,$patient_id);
+			list($humiditymonthlabels,$humiditymonthaverage,$humiditymonthmin,$humiditymonthmax) = getNowMonthHumidity($dbc,$patient_id,14);
 			$humidity_month_data =  data2Chart($humiditymonthlabels,$humiditymonthaverage,$humiditymonthmin,$humiditymonthmax,MonthHumidityDataSet);
 
-			list($moisturemonthlabels,$moisturemonthaverage,$moisturemonthmin,$moisturemonthmax) = getNowMonthMoisture($dbc,$patient_id,$patient_id);
+			list($moisturemonthlabels,$moisturemonthaverage,$moisturemonthmin,$moisturemonthmax) = getNowMonthMoisture($dbc,$patient_id,14);
 			$moisture_month_data =  data2Chart($moisturemonthlabels,$moisturemonthaverage,$moisturemonthmin,$moisturemonthmax,MonthMoistureDataSet);
 		}
 ?>
@@ -76,8 +76,8 @@
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active" id="myHomeTab"><a data-toggle="tab" href="#myHome">Patient Home</a></li>
       <li role="presentation" id = "patientMeasurementsTab"><a data-toggle="tab" href="#patientMeasurements">Patient Measurements</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#visitHistory">Visit History</a></li>
-			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
+      <!-- <li role="presentation"><a data-toggle="tab" href="#visitHistory">Visit History</a></li>
+			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li> -->
 
     </ul>
 
@@ -220,8 +220,8 @@
 				}
 			?>
 		</div>
-    <div role="tabpanel" class="tab-pane" id="visitHistory"></div>
-		<div role="tabpanel" class="tab-pane" id="settings"></div>
+    <!-- <div role="tabpanel" class="tab-pane" id="visitHistory"></div>
+		<div role="tabpanel" class="tab-pane" id="settings"></div> -->
   </div>
 
   </div>

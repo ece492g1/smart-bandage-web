@@ -18,6 +18,9 @@ if($record_type == 'temp'){
   if (floatval($value) > floatval(36)){
     list($ok2,$errors2) = addAlert($dbc,$bandage_id,"t",$creation_time,$value);
   }
+  if (floatval($value) < floatval(20)){
+    list($ok2,$errors2) = addAlert($dbc,$bandage_id,"t",$creation_time,$value);
+  }
 }elseif ($record_type == 'humidity') {
   list ($ok,$errors) = addHumidity($dbc,$bandage_id,$sensor_id,$creation_time,$value);
   if (floatval($value) > floatval(60)){
@@ -40,10 +43,6 @@ mysqli_close($dbc);
     <title></title>
   </head>
   <body>
-    <?php
-    foreach ($errors2 as $key) {
-      echo $key;
-    }
-     ?>
+
   </body>
 </html>

@@ -58,11 +58,11 @@
     	<!-- Tab panes -->
 		  <div class="tab-content">
 		    <div role="tabpanel" class="tab-pane bs-example active" id="myHome">
-					<br/>
-					<br/>
+					<h4>Alerts:</h4>
 					<?php
 						include('include/search_functions.php');
 						echo generateAlerts(getAlerts($dbc,$_SESSION['pid']));
+
 					 ?>
 					<script> $().alert(); </script>
 				</div>
