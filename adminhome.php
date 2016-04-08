@@ -1,11 +1,11 @@
-<?php #login page
-// This page processes the login form and redirects the user based on which role they have
-	require('include/login_functions.php');
+<?php
 	session_start();
+	require('include/login_functions.php');
+	require('../sql_connect.php');
 		if ($_SESSION['user_type'] != 'a'){
 			redirect_user();
 		}
-
+		include('include/adminhome_functions.php');
 ?>
 <html lang="en">
   <head>
@@ -15,16 +15,16 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+		<script src="Chart.js"></script>
 
     <title>Admin Console</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/dist/custom/css/sb.css" rel="stylesheet">
-
 
     <!-- Custom styles for this template -->
-    <!--<link href="/dist/custom/css/signin.css" rel="stylesheet">-->
+		<link href="/dist/custom/css/sb.css" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -34,29 +34,92 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
-
 		<?php
 		include('include/navbar.php');
 		?>
-    <h1 class="text-center">@UserName</h1>
+		<h1 class="text-center">Signed in as:
+			<?php
+				include('include/account_functions.php');
+				list($stat,$res) = getUserInfo($dbc,$_SESSION['pid']);
+				if ($stat){
+					echo $res['first_name']. " " . $res['last_name'];
+				}
+			 ?>
+		</h1>
 		<div class="container">
     <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Console</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#nurseConsole">Nurse Console</a></li>
+      <li role="presentation" class="active"><a data-toggle="tab" href="#myHome">My Home</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#patientManager">Patient Manager</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#nurseManager">Nurse Manager</a></li>
 			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
     </ul>
 
     <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active bs-example" id="myhome">My home will just show
-		basic information about current user data </div>
-    <div role="tabpanel" class="tab-pane bs-example" id="patientConsole">Search Bar to lookup patients
-		also a button to add another patient</div>
-    <div role="tabpanel" class="tab-pane bs-example" id="nurseConsole">Search to lookup nurses</div>
-		<div role="tabpanel" class="tab-pane" id="settings">
+    <div role="tabpanel" class="tab-pane active bs-example" id="myHome">
+			<p><b>Interesting Data for Admins:</b></p>
+			<br />
+			<p> Users active today:
+			<?php
+				list ($hasLogins,$numLogins) = getTodayUsers($dbc);
+				if ($hasLogins){
+					echo $numLogins;
+				}
+			 ?></p>
+			<br />
+			<p> Bandages to Date:
+				<?php
+					list ($hasBandages,$numBandages) = getNumberBandages($dbc);
+					if ($hasBandages){
+						echo $numBandages;
+					}else {
+						echo "0";
+					}
+				 ?>
+			 </p>
+			<br />
+			<p> Alerts for today:
+				<?php
+					list ($hasAlerts,$numAlerts) = getTodaysAlerts($dbc);
+					if ($hasAlerts){
+						echo $numAlerts;
+					}else {
+						echo "0";
+					}
+				 ?>
+			 </p>
+			<br />
+		</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">
+			<a href="newPatient.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Patient</a>
+			<form role="form" action="patientSearchResults.php" method="POST">
+			<div class="form-group">
+				<label for="searchPatientParam"> Patient Lookup: </label>
+				<div class="input-group">
+				<input type="text" id="searchPatientParam" name="searchPatientParam" class="form-control" placeholder="Search for Patient">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Search</button>
+				</span>
+				</div>
+			</div>
+		</form>
+	</div>
+    <div role="tabpanel" class="tab-pane bs-example" id="nurseManager">
+			<a href="newUser.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New User</a>
+			<form role="form" action="nurseSearchResults.php" method="POST">
+				<div class="form-group">
+					<label for="searchNurseParam"> Nurse Lookup: </label>
+					<div class="input-group">
+					<input type="text" id="searchNurseParam" name="searchNurseParam" class="form-control" placeholder="Search for Nurse">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">Search</button>
+					</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div role="tabpanel" class="tab-pane bs-example" id="settings">
 			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
 		</div>
   </div>

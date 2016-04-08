@@ -1,11 +1,10 @@
-<?php #login page
-// This page processes the login form and redirects the user based on which role they have
+<?php
 	require('include/login_functions.php');
+	require('../sql_connect.php');
 	session_start();
 		if ($_SESSION['user_type'] != 'n'){
 			redirect_user();
 		}
-
 ?>
 <html lang="en">
   <head>
@@ -23,7 +22,8 @@
 
 
     <!-- Custom styles for this template -->
-    <!--<link href="/dist/custom/css/signin.css" rel="stylesheet">-->
+		<link href="/dist/custom/css/sb.css" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -38,31 +38,63 @@
     <?php
 		include('include/navbar.php');
 		?>
-    <h1 class="text-center">@UserName</h1>
+    <h1 class="text-center">Signed in as:
+			<?php
+				include('include/account_functions.php');
+				list($stat,$res) = getUserInfo($dbc,$_SESSION['pid']);
+				if ($stat){
+					echo $res['first_name']. " " . $res['last_name'];
+				}
+			 ?>
+		</h1>
 		<div class=container>
-    <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="active"><a data-toggle="tab" href="#myhome">My Home</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#patientConsole">Patient Subscriptions</a></li>
-			<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
+	    <ul class="nav nav-tabs nav-justified">
+	      <li role="presentation" class="active"><a data-toggle="tab" href="#myHome">My Home</a></li>
+	      <li role="presentation"><a data-toggle="tab" href="#patientManager">Patient Subscriptions</a></li>
+				<li role="presentation"><a data-toggle="tab" href="#settings">Settings</a></li>
 
-    </ul>
+	    </ul>
 
-    <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="myhome"></div>
-    <div role="tabpanel" class="tab-pane" id="patientConsole">
-			<div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for Patient">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-    </div>
-			then there will be a table of subscriptions for each health provider</div>
-		<div role="tabpanel" class="tab-pane" id="settings">
-			<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
-		</div>
-  </div>
+    	<!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane bs-example active" id="myHome">
+					<h4>Alerts:</h4>
+					<?php
+						include('include/search_functions.php');
+						echo generateAlerts(getAlerts($dbc,$_SESSION['pid']));
 
-  </div>
+					 ?>
+					<script> $().alert(); </script>
+				</div>
+		    <div role="tabpanel" class="tab-pane bs-example" id="patientManager">
+
+					<form role="form" action="patientSearchResults.php" method="POST">
+					  <div class="form-group">
+							<div class="input-group">
+							<input type="text" id="searchPatientParam" name="searchPatientParam" class="form-control" placeholder="Search for Patient">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">Search</button>
+							</span>
+							</div>
+					  </div>
+					</form>
+
+					<?php
+						list($ok,$results) = getSubscriptions($dbc,$_SESSION['pid']);
+						if ($ok){
+							echo tabulateResultSet($results);
+						}else {
+							echo "<h3>You currently are not subscribed to any patients</h3>";
+						}
+					 ?>
+
+				</div>
+				<div role="tabpanel" class="tab-pane bs-example" id="settings">
+					<a href="changepassword.php" class="btn btn-primary btn-lg" role="button">Change Password</a>
+				</div>
+		  </div>
+
+  	</div>
   </body>
+	<?php mysqli_close($dbc);?>
 </html>

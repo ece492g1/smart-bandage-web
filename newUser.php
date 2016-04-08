@@ -1,33 +1,48 @@
 <?php
     session_start();
     require('../sql_connect.php');
-    if (!isset($_SESSION['email'])){
+    if ($_SESSION['user_type'] != 'a'){
         require('include/login_functions.php');
         redirect_user();
     }
     if($_SERVER['REQUEST_METHOD'] == 'POST' ) {
         $errors = array();
-        if(empty($_POST['old_pass'])){
-            $errors[] = 'You did not enter your old password';
+        if(empty($_POST['first_name'])){
+            $errors[] = 'You did not enter a first name';
         } else {
-            $old_pass_c = trim($_POST['old_pass']);
+            $first_name = trim($_POST['first_name']);
+        }
+        if(empty($_POST['last_name'])){
+            $errors[] = 'You did not enter a last name';
+        } else {
+            $last_name = trim($_POST['last_name']);
+        }
+        if(empty($_POST['email'])){
+            $errors[] = 'You did not enter an email';
+        } else {
+            $email = trim($_POST['email']);
+        }
+        if(empty($_POST['user_type'])){
+            $errors[] = 'You did not enter a user type';
+        } else {
+            $user_type = trim($_POST['user_type']);
         }
         if(empty($_POST['new_pass_1'])){
-            $errors[] = 'You did not enter your new password';
+            $errors[] = 'You did not enter a password';
         } else {
-            $new_pass_1c = trim($_POST['new_pass_1']);
+            $new_pass_1 = trim($_POST['new_pass_1']);
         }
         if(empty($_POST['new_pass_2'])){
-            $errors[] = 'You did not confirm your new password';
+            $errors[] = 'You did not enter a confirm password';
         } else {
-            $new_pass_2c = trim($_POST['new_pass_2']);
+            $new_pass_2 = trim($_POST['new_pass_2']);
         }
 
         if (empty($errors)){ //there were no errors so continue to change the password
-            if ( $new_pass_1c == $new_pass_2c){
+            if ( $new_pass_1 == $new_pass_2){
                 require('include/account_functions.php');
-                $email = $_SESSION['email'];
-                list($ok,$errorslog) = changePassword($dbc,$email,$old_pass_c,$new_pass_1c);
+                list ($ok, $errorslog) = addUser($dbc,$email,$new_pass_1,$user_type,$first_name,$last_name);
+
             }
         } else { //there were errors input, not query related
 
@@ -67,16 +82,25 @@
 		?>
     <div class="container">
 
-      <form class="form-signin" action="changepassword.php" method="POST">
-        <h2 class="form-signin-heading">Password Management</h2>
+      <form class="form-signin" action="newUser.php" method="POST">
+        <h2 class="form-signin-heading">Add New User</h2>
 
-        <label for="old_pass" class="sr-only">Old Password</label>
-        <input type="password" id="old_pass" name="old_pass" class="form-control" placeholder="Old Password" required>
+        <label for="first_name" class="sr-only">First Name</label>
+        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" required>
 
-        <label for="new_pass_1" class="sr-only">New Password</label>
+        <label for="last_name" class="sr-only">Last Name</label>
+        <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" required>
+
+        <label for="email" class="sr-only">Email</label>
+        <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+
+        <label for="user_type" class="sr-only">User Type</label>
+        <input type="text" id="user_type" name="user_type" class="form-control" placeholder="a or n" required>
+
+        <label for="new_pass_1" class="sr-only">Password</label>
         <input type="password" id="new_pass_1" name="new_pass_1" class="form-control" placeholder="New Password" required>
 
-        <label for="new_pass_2" class="sr-only">Confirm New Password</label>
+        <label for="new_pass_2" class="sr-only">Confirm Password</label>
         <input type="password" id="new_pass_2" name="new_pass_2" class="form-control" placeholder="Confirm Password" required>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>

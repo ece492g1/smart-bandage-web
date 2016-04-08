@@ -20,12 +20,9 @@
 
 		$q = "SELECT * FROM users WHERE provider_id ='$pid'";
         $r = @mysqli_query($dbc,$q);
-
-
         if (mysqli_num_rows($r) == 1) {
             $row = mysqli_fetch_array($r,MYSQLI_ASSOC);
             return array(true,$row);
-
 			}
         else {
             $errors[] = 'There is not a person with this pid';
@@ -82,7 +79,7 @@
 
 		$q1 = "SELECT email, password FROM users WHERE email = '$email' AND password = '$oldpass'";
 		$r1 = @mysqli_query($dbc,$q1);
-
+    if ($r1){
 		if (mysqli_num_rows($r1) == 1 ){
 
 			$q2 = "UPDATE users SET password = '$newpass' WHERE email = '$email'";
@@ -99,6 +96,10 @@
 			$errors[] = 'The old password is incorrect';
 			return array(false,$errors);
 		}
+  }else {
+    $errors[] = 'Password Update failed';
+    return array(false,$errors);
+  }
 	}
 
   function updateUserFirstName($dbc,$pid,$firstname) {
